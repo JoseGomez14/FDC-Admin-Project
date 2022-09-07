@@ -28,6 +28,7 @@ const Create = () => {
         }
         return () => {
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [commonName, imageUrls, images.length, scientificName, sound.length, soundUrl])
     
 
@@ -116,7 +117,7 @@ const Create = () => {
         document.querySelector('#inpt-sound-species').value = "";
         document.querySelector('#inpt-images-species').value = "";
     }
-    
+
     const uploadToDB = async (species)=>{
         const docRef = await addDoc(
             collection(dataBase, "species"), 
@@ -139,6 +140,7 @@ const Create = () => {
                     <input
                         type="text"
                         placeholder='Nombre de la especie'
+                        disabled={!stateForm}
                         value={commonName}
                         onChange={(evt) => setCommonName(evt.target.value)} />
                 </label><br />
@@ -148,6 +150,7 @@ const Create = () => {
                     <input
                         type="text"
                         placeholder='Nombre científico de la especie'
+                        disabled={!stateForm}
                         value={scientificName}
                         onChange={(evt) => setScientificName(evt.target.value)} />
                 </label><br />
@@ -159,6 +162,7 @@ const Create = () => {
                         name="inpt-images-species"
                         id="inpt-images-species"
                         multiple
+                        disabled={!stateForm}
                         accept='.jpg, .jpeg, .png'
                         onChange={(evt) => setImages(evt.target.files)} />
                 </label><br />
@@ -169,6 +173,7 @@ const Create = () => {
                         type="file"
                         name="inpt-sound-species"
                         id="inpt-sound-species"
+                        disabled={!stateForm}
                         accept='.mp3'
                         onChange={(evt) => setSound(evt.target.files)} />
                 </label><br /><br />
