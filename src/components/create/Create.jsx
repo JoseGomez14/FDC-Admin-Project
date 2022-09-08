@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Species } from '../../model/Species';
+import { Specie } from '../../model/Specie';
 import { storage, dataBase } from '../../firebase/firebaseConfig';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { uuidv4 } from '@firebase/util';
@@ -18,12 +18,12 @@ const Create = () => {
         if (images.length === imageUrls.length && images.length > 0) {
             if(sound.length > 0){
                 if(soundUrl.length > 0){
-                    let species = new Species(commonName, scientificName, imageUrls, soundUrl);
-                    uploadToDB(species.toJson());
+                    let specie = new Specie(commonName, scientificName, imageUrls, soundUrl);
+                    uploadToDB(specie.toJson());
                 }
             }else{
-                let species = new Species(commonName, scientificName, imageUrls, soundUrl);
-                uploadToDB(species.toJson());
+                let specie = new Specie(commonName, scientificName, imageUrls, soundUrl);
+                uploadToDB(specie.toJson());
             }
         }
         return () => {

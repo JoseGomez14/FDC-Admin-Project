@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import { ProtectedRoute, ProtectedRouteLogin } from './components/ProtectedRoute';
 import App from './App';
 import Login from './components/login/Login';
 import Create from './components/create/Create';
@@ -22,7 +22,9 @@ root.render(
             </ProtectedRoute>
           } />
           <Route path='/login' element={
-            <Login />
+            <ProtectedRouteLogin>
+              <Login />
+            </ProtectedRouteLogin>
           } />
           <Route path='/create' element={
             <ProtectedRoute>

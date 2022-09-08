@@ -1,4 +1,4 @@
-export class Species{
+export class Specie{
     #id;
     #commonName;
     #scientificName;
