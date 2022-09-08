@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 import App from './App';
+import Login from './components/login/Login';
+import Create from './components/create/Create';
+import Edit from './components/edit/Edit';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -10,7 +15,28 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        <App />
+        <Routes>
+          <Route path='/' element={
+            <ProtectedRoute>
+              <App />
+            </ProtectedRoute>
+          } />
+          <Route path='/login' element={
+            <Login />
+          } />
+          <Route path='/create' element={
+            <ProtectedRoute>
+              <Create />
+            </ProtectedRoute>
+          } />
+          <Route path='/edit/'>
+            <Route path=':id' element={
+              <ProtectedRoute>
+                <Edit />
+              </ProtectedRoute>
+            } />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>

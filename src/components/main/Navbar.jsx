@@ -1,8 +1,22 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { auth } from '../../firebase/firebaseConfig'
+import { signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-    return ( 
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return (
         <nav>
             <ul>
                 <li>
@@ -16,18 +30,13 @@ const Navbar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={'/login'}>
-                        Inicio de sesión
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to={'/edit/id'}>
-                        Editar
-                    </NavLink>
+                    <button onClick={handleLogout}>
+                        Cerrar sesión
+                    </button>
                 </li>
             </ul>
         </nav>
-     );
+    );
 }
- 
+
 export default Navbar;
