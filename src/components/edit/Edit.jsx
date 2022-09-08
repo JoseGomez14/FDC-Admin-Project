@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import {dataBase} from '../../firebase/firebaseConfig'
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { Species } from '../../model/Species';
 
 const Edit = () => {
@@ -12,6 +12,7 @@ const Edit = () => {
     const [soundUrl, setSoundUrl] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
     const [stateForm, setStateForm] = useState(true);
+    const [deleteState, setDeleteState] = useState(false);
 
     const {id} = useParams();
     useEffect(() => {
@@ -27,7 +28,6 @@ const Edit = () => {
             setDocState('exists');
             loadData(docSnap.data());
           } else {
-            // doc.data() will be undefined in this case
             setDocState('empty');
           }
     }
@@ -47,6 +47,11 @@ const Edit = () => {
         updateDoc(docRef, species.toJson());
         alert("The doc was updated");
         setStateForm(true);
+    }
+
+    const deleteSpecies = async ()=>{
+        await deleteDoc(doc(dataBase, "species", id));
+        setDeleteState(true)
     }
 
     return ( 
@@ -98,6 +103,8 @@ const Edit = () => {
 
                 <button type="submit">Editar</button>
             </form>
+            <button onClick={() => deleteSpecies()}>Eliminar</button>
+            {deleteState && <Navigate to={'/'} replace/>}
         </div>
         :<></>}
         </>
