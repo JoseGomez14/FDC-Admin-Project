@@ -28,7 +28,7 @@ const Edit = () => {
             loadData(docSnap.data());
           } else {
             // doc.data() will be undefined in this case
-            setDocState('invalid');
+            setDocState('empty');
           }
     }
 
@@ -52,7 +52,7 @@ const Edit = () => {
     return ( 
         <>  
             {docState === 'load'? <h1>Cargando...</h1>: <></>}
-            {docState === 'invalid'? <h1>La especie no se ha encontrado, ingresa a ...</h1>: <></>}
+            {docState === 'empty'? <h1>La especie no se ha encontrado, ingresa a ...</h1>: <></>}
             {docState === 'exists'? 
             <div>
             <h1>Editar una especie</h1>
