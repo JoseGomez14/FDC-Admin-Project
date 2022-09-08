@@ -50,8 +50,10 @@ const Edit = () => {
     }
 
     const deleteSpecies = async ()=>{
-        await deleteDoc(doc(dataBase, "species", id));
-        setDeleteState(true)
+        if(window.confirm("¿Está seguro de eliminar el registro?")){
+            await deleteDoc(doc(dataBase, "species", id));
+            setDeleteState(true)
+        }
     }
 
     return ( 
@@ -68,6 +70,7 @@ const Edit = () => {
                     <input
                     type="text"
                     placeholder='Nombre de la especie'
+                    pattern="[a-zA-ZÀ-ÿ\s]{1,40}" title="El nombre debe tener entre 1 y 40 caracteres"
                     disabled={!stateForm}
                     value={commonName}
                     onChange={(evt) => setCommonName(evt.target.value)}/>
@@ -78,6 +81,7 @@ const Edit = () => {
                     <input
                     type="text"
                     placeholder='Nombre científico de la especie'
+                    pattern="[a-zA-ZÀ-ÿ\s]{1,40}" title="El nombre debe tener entre 1 y 40 caracteres"
                     disabled={!stateForm}
                     value={scientificName}
                     onChange={(evt) => setScientificName(evt.target.value)}/>
