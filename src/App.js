@@ -39,7 +39,7 @@ function App() {
       {empty &&
         <div>
           <h1>No hay especies registradas.</h1>
-          <NavLink to="/">Agregar Especies</NavLink>
+          <NavLink to="/create">Agregar Especies</NavLink>
         </div>
       }
       <Footer />

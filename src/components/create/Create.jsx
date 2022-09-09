@@ -4,39 +4,54 @@ import { storage, dataBase } from '../../firebase/firebaseConfig';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { uuidv4 } from '@firebase/util';
 import { collection, addDoc, updateDoc} from 'firebase/firestore'; 
+import { NavLink } from 'react-router-dom';
+import SpecieForm from '../SpecieForm';
 
 const Create = () => {
-    const [commonName, setCommonName] = useState("");
-    const [scientificName, setScientificName] = useState("");
+    const [specie, setSpecie] = useState(new Specie());
     const [images, setImages] = useState({});
     const [sound, setSound] = useState({});
     const [soundUrl, setSoundUrl] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
-    const [stateForm, setStateForm] = useState(true);
 
     useEffect(() => {
+        const uploadToDB = async ()=>{
+            const docRef = await addDoc(
+                collection(dataBase, "species"), 
+                specie.toJson()
+            );
+    
+            updateDoc(docRef, {
+                id: docRef.id
+            })
+            alert("The doc was added");
+            clearForm();
+        }
+
         if (images.length === imageUrls.length && images.length > 0) {
             if(sound.length > 0){
                 if(soundUrl.length > 0){
-                    let specie = new Specie(commonName, scientificName, imageUrls, soundUrl);
+                    let specieAux = specie;
+                    specieAux.images = imageUrls;
+                    specieAux.sound = soundUrl;
+                    setSpecie(specieAux)
                     uploadToDB(specie.toJson());
                 }
             }else{
-                let specie = new Specie(commonName, scientificName, imageUrls, soundUrl);
+                let specieAux = specie;
+                specieAux.images = imageUrls;
+                setSpecie(specieAux)
                 uploadToDB(specie.toJson());
             }
         }
         return () => {
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [commonName, imageUrls, images.length, scientificName, sound.length, soundUrl])
+    }, [imageUrls, images, sound, soundUrl, specie])
     
 
-    const createSpecies = (evt) => {
-        evt.preventDefault();
+    const createSpecies = () => {
         if (images.length <= 4 && images.length >= 1) {
             if(verifyImageSize(images)){
-                setStateForm(false);
                 uploadImages();
             }
         } else {
@@ -107,9 +122,6 @@ const Create = () => {
     }
 
     const clearForm = () =>{
-        setStateForm(true);
-        setCommonName("");
-        setScientificName("");
         setSound("");
         setImages({});
         setImageUrls([]);
@@ -118,70 +130,18 @@ const Create = () => {
         document.querySelector('#inpt-images-species').value = "";
     }
 
-    const uploadToDB = async (species)=>{
-        const docRef = await addDoc(
-            collection(dataBase, "species"), 
-            species
-        );
-
-        updateDoc(docRef, {
-            id: docRef.id
-        })
-        alert("The doc was added");
-        clearForm();
-    }
-
     return (
         <>
             <h1>Agregar una especie</h1>
-            <form onSubmit={createSpecies}>
-                <label htmlFor="">
-                    Nombre de la especie<br />
-                    <input
-                        type="text"
-                        placeholder='Nombre de la especie'
-                        pattern="[a-zA-ZÀ-ÿ\s]{1,40}" title="El nombre debe tener entre 1 y 40 caracteres"
-                        disabled={!stateForm}
-                        value={commonName}
-                        onChange={(evt) => setCommonName(evt.target.value)} />
-                </label><br />
-
-                <label htmlFor="">
-                    <br />Nombre científico de la especie<br />
-                    <input
-                        type="text"
-                        placeholder='Nombre científico de la especie'
-                        pattern="[a-zA-ZÀ-ÿ\s]{1,40}" title="El nombre debe tener entre 1 y 40 caracteres"
-                        disabled={!stateForm}
-                        value={scientificName}
-                        onChange={(evt) => setScientificName(evt.target.value)} />
-                </label><br />
-
-                <label htmlFor="inpt-images-species">
-                    <br />Fotografía de la especie<br />
-                    <input
-                        type="file"
-                        name="inpt-images-species"
-                        id="inpt-images-species"
-                        multiple
-                        disabled={!stateForm}
-                        accept='.jpg, .jpeg, .png'
-                        onChange={(evt) => setImages(evt.target.files)} />
-                </label><br />
-
-                <label htmlFor="inpt-sound-species">
-                    <br />Registro de sonido de la especie<br />
-                    <input
-                        type="file"
-                        name="inpt-sound-species"
-                        id="inpt-sound-species"
-                        disabled={!stateForm}
-                        accept='.mp3'
-                        onChange={(evt) => setSound(evt.target.files)} />
-                </label><br /><br />
-
-                <button type="submit" disabled={!stateForm}>Agregar</button>
-            </form>
+            <NavLink to={'/'}>Volver al inicio</NavLink>
+            <SpecieForm
+                setSpecie={setSpecie}
+                createSpecies={createSpecies}
+                images={images}
+                setImages={setImages}
+                sound={sound}
+                setSound={setSound}
+            />
         </>
     );
 }
