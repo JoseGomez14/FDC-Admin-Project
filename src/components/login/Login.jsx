@@ -1,16 +1,25 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase/firebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import loginUser from '../../firebase/loginUser';
 
+/**
+ * Este componente se encarga de gestionar el formulario de inicio de sesión
+ * 
+ * @returns El formulario de incio de sesión
+ */
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    /**
+     * Se encarga de verificar que la información ingresada cumpla con los requisitos y si es así
+     * enviar la información para validar desde loginUser con auth de firebase
+     * 
+     * @param {*} evt información del evento submit del formulario
+     */
     const handleLogin = async (evt) => {
         evt.preventDefault();
-
         const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
         if (!expresionRegular.test(email)) {
             alert("El correo no es válido")
@@ -22,22 +31,7 @@ const Login = () => {
             return;
         }
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            navigate('/');
-        } catch (error) {
-            switch (error.code) {
-                case 'auth/wrong-password':
-                    alert('La contraseña no es correcta.');
-                    break;
-                case 'auth/user-not-found':
-                    alert('No se encontro ninguna cuenta con este correo electrónico.');
-                    break;
-                default:
-                    alert('Hubo un error al intentar crear la cuenta.');
-                    break;
-            }
-        }
+        loginUser(email, password, navigate)
     }
 
     return (
@@ -46,11 +40,19 @@ const Login = () => {
             <form onSubmit={handleLogin}>
                 <label htmlFor="">
                     Correo electrónico<br />
-                    <input type="email" value={email} onChange={(evt) => setEmail(evt.target.value)}/>
+                    <input
+                        type="email"
+                        value={email}
+                        autoComplete='username'
+                        onChange={(evt) => setEmail(evt.target.value)}/>
                 </label><br />
                 <label htmlFor="">
                     <br />Contraseña<br />
-                    <input type="password" value={password} onChange={(evt) => setPassword(evt.target.value)} />
+                    <input 
+                        type="password"
+                        value={password}
+                        autoComplete='current-password'
+                        onChange={(evt) => setPassword(evt.target.value)} />
                 </label><br /><br />
 
                 <button type='submit'>Ingresar</button>
