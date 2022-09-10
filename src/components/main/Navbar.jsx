@@ -4,9 +4,18 @@ import { auth } from '../../firebase/firebaseConfig'
 import { signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Este componente contiene el HTML del navbar que contiene enlaces de navegación y la posibilidad
+ * de cerrar la sesión
+ * 
+ * @returns Retorna el Navbar
+ */
 const Navbar = () => {
     const navigate = useNavigate();
 
+    /**
+     * Se encarga de gestionar el logout y redireccionar hacia el login
+     */
     const handleLogout = async () => {
         try {
             await signOut(auth);

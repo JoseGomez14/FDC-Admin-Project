@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { dataBase } from "../firebase/firebaseConfig";
 import { getDoc, doc } from "firebase/firestore";
 
+/**
+ * Hook encargado de cargar la información de una especie en específico dado su id
+ * @param {string} id identificador de la especie en la base de datos
+ * @returns retorna la información obtenida y el estado de la transacción
+ */
 const useGetSpecie = (id) => {
     const [specie, setSpecie] = useState({})
     const [docState, setDocState] = useState('load');

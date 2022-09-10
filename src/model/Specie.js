@@ -1,3 +1,9 @@
+/**
+ * Esta clase es el modelo de cada especie que trabaja en el sitio, contiene los
+ * atributos que se han considerado necesario para los procesos de divulgación y filtrado
+ * 
+ * Contiene un método que permite transformar la información de la clase en objeto Json
+ */
 export class Specie{
     #id;
     #commonName;
@@ -16,6 +22,13 @@ export class Specie{
     #srcSound;
     #inaturalistUrl;
 
+    /**
+     * Constructor de la clase
+     * @param {string} commonName Nombre común de la especie
+     * @param {string} scientificName Nombre científico de la especie
+     * @param {string[]} images Conjunto de urls de las imágenes asociadas a la especie
+     * @param {string} sound Url del sonido asociado a la especie
+     */
     constructor(commonName, scientificName, images, sound){
         this.#commonName = commonName;
         this.#scientificName = scientificName;
@@ -35,6 +48,7 @@ export class Specie{
         this.#srcSound = "";
     }
 
+    /**Getters and setters */
     get id(){
         return(this.#id);
     }
@@ -163,6 +177,10 @@ export class Specie{
         this.#srcSound = srcSound;
     }
 
+    /**
+     * Este método permite consolidar la información de la clase en un objeto Json
+     * @returns objeto Json con la información de la especie
+     */
     toJson(){
         const obj = {
             id: this.#id,
