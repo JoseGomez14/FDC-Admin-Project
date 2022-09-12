@@ -8,6 +8,7 @@ export class Specie{
     #id;
     #commonName;
     #scientificName;
+    #kingdom;
     #className;
     #genus;
     #description;
@@ -32,6 +33,7 @@ export class Specie{
     constructor(commonName, scientificName, images, sound){
         this.#commonName = commonName;
         this.#scientificName = scientificName;
+        this.#kingdom = "";
         this.#images = images;
         this.#sound = sound;
         this.#id = "";
@@ -79,6 +81,14 @@ export class Specie{
 
     set className(className){
         this.#className = className;
+    }
+
+    get kingdom(){
+        return(this.#kingdom);
+    }
+
+    set kingdom(kingdom){
+        this.#kingdom = kingdom;
     }
     
     get genus(){
@@ -186,6 +196,7 @@ export class Specie{
             id: this.#id,
             commonName: this.#commonName,
             scientificName: this.#scientificName,
+            kingdom: this.#kingdom,
             className: this.#className,
             genus: this.#genus,
             description: this.#description,
