@@ -7,64 +7,136 @@
  * @returns 
  */
 const Form = (props) => {
-    return ( 
+    return (
         <form onSubmit={props.handleSubmit}>
-        <label htmlFor="">
-            Nombre de la especie<br />
-            <input
-                type="text" required
-                id="inpt-common-name-species"
-                placeholder="Nombre de la especie"
-                pattern="[a-zA-ZÀ-ÿ\s]{2,}"
-                title="El nombre debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
-                disabled={!props.formState}
-                value={props.commonName}
-                onChange={(evt) => props.setCommonName(evt.target.value)} />
-        </label><br />
+            <fieldset>
+                <legend>Taxonomía</legend>
+                <label htmlFor="inpt-common-name-species">Nombre común</label><br />
+                <input
+                    type="text" required
+                    id="inpt-common-name-species"
+                    placeholder="Nombre de la especie"
+                    pattern="[a-zA-ZÀ-ÿ\s]{2,}"
+                    title="El nombre debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
+                    disabled={!props.formState}
+                    value={props.commonName}
+                    onChange={(evt) => props.setCommonName(evt.target.value)} />
 
-        <label htmlFor="">
-            <br />Nombre científico de la especie<br />
-            <input
-                type="text" required
-                id="inpt-scientific-name-species"
-                placeholder="Nombre científico de la especie"
-                pattern="[a-zA-ZÀ-ÿ\s]{2,}"
-                title="El nombre debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
-                disabled={!props.formState}
-                value={props.scientificName}
-                onChange={(evt) => props.setScientificName(evt.target.value)} />
-        </label><br />
+                <label htmlFor="inpt-scientific-name-species">Nombre científico</label>
+                <input
+                    type="text" required
+                    id="inpt-scientific-name-species"
+                    placeholder="Nombre científico de la especie"
+                    pattern="[a-zA-ZÀ-ÿ\s]{2,}"
+                    title="El nombre debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
+                    disabled={!props.formState}
+                    value={props.scientificName}
+                    onChange={(evt) => props.setScientificName(evt.target.value)} />
+                
+                <label htmlFor="inpt-genus-species">Género</label>
+                <input
+                    type="text" required
+                    id="inpt-genus-species"
+                    placeholder="Género de la especie"
+                    pattern="[a-zA-ZÀ-ÿ\s]{2,}"
+                    title="El nombre debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
+                    disabled={!props.formState}
+                    value={''}
+                    onChange={''} />
+                
+                <label htmlFor="inpt-class-species">Clase</label>
+                <select 
+                    id="inpt-class-species" required
+                    disabled={!props.formState}>
+                    <option value='aves'>Aves</option>
+                    <option value='mamiferos'>Mamíferos</option>
+                    <option value='reptiles'>Reptiles</option>
+                    <option value='anfibios'>Anfibios</option>
+                    <option value='insectos'>Insectos</option>
+                    <option value='plantas'>Plantas</option>
+                    <option value='hongos'>Hongos</option>
+                </select>
+            </fieldset>
 
-        <label htmlFor="inpt-images-species">
-            <br />Fotografía de la especie<br />
-            <input
-                type="file"
-                name="inpt-images-species"
-                id="inpt-images-species"
-                multiple
-                disabled={!props.formState}
-                accept='.jpg, .jpeg, .png'
-                onChange={(evt) => props.setImages(evt.target.files)} />
-        </label><br />
+            <fieldset>
+                <legend>Información</legend>
+                <label htmlFor="inpt-description-species">Descripción</label>
+                <input
+                    type="text" required
+                    id="inpt-description-species"
+                    placeholder="Descripción general de la especie"
+                    pattern="[a-zA-ZÀ-ÿ\s]{2,}"
+                    title="El nombre debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
+                    disabled={!props.formState}
+                    value={''}
+                    onChange={''} />
+                
+                <label htmlFor="inpt-url-map-species">Url de ubicación del registro</label>
+                <input
+                    type="url"
+                    id="inpt-url-map-species"
+                    placeholder="Ubicación del registro"
+                    disabled={!props.formState}
+                    value={''}
+                    onChange={''} />
+                
+                <label htmlFor="inpt-extinction-species">Especie en vía de extinción</label>
+                <input 
+                    type="checkbox"
+                    id="inpt-extinction-species"
+                    disabled={!props.formState}/>
+            </fieldset>
 
-        <label htmlFor="inpt-sound-species">
-            <br />Registro de sonido de la especie<br />
-            <input
-                type="file"
-                name="inpt-sound-species"
-                id="inpt-sound-species"
-                disabled={!props.formState}
-                accept='.mp3'
-                onChange={(evt) => props.setSound(evt.target.files)} />
-        </label><br /><br />
+            <fieldset>
+                <legend>Reino</legend>
+                <label htmlFor="inpt-type-fauna">Fauna</label>
+                <input type="radio" name="inpt-type" id="inpt-type-fauna" checked='true' />
 
-        <button
-            type="submit"
-            disabled={!props.formState}
-        >{props.specie ? 'Editar' : 'Agregar'}
-        </button>
-    </form>
-     );
+                <label htmlFor="inpt-type-flora">Flora</label>
+                <input type="radio" name="inpt-type" id="inpt-type-flora" />
+            </fieldset>
+
+            <fieldset>
+                <legend>Imágenes</legend>
+                <label htmlFor="inpt-images-species">Registros fotográficos</label>
+                <input
+                    type="file"
+                    name="inpt-images-species"
+                    id="inpt-images-species"
+                    multiple
+                    disabled={!props.formState}
+                    accept='.jpg, .jpeg, .png'
+                    onChange={(evt) => props.setImages(evt.target.files)} />
+            </fieldset>
+
+            <fieldset>
+                <legend>Sonido</legend>
+                <label htmlFor="inpt-sound-species">Registro de sonido</label>    
+                <input
+                    type="file"
+                    name="inpt-sound-species"
+                    id="inpt-sound-species"
+                    disabled={!props.formState}
+                    accept='.mp3'
+                    onChange={(evt) => props.setSound(evt.target.files)} />
+                
+                <label htmlFor="inpt-src-sound-species">Fuente del sonido</label>
+                <input
+                    type="text"
+                    id="inpt-src-sound-species"
+                    placeholder="Fuente del sonido"
+                    disabled={!props.formState}
+                    value={''}
+                    onChange={''} />
+            </fieldset>
+
+            <button
+                type="submit"
+                disabled={!props.formState}
+            >{props.specie ? 'Editar' : 'Agregar'}
+            </button>
+        </form>
+    );
 }
- 
+
 export default Form;
