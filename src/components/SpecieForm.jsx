@@ -23,14 +23,14 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
     const [commonName, setCommonName] = useState("");
     const [scientificName, setScientificName] = useState("");
     const [genus, setGenus] = useState("");
-    const [className, setClassName] = useState("aves");
+    const [className, setClassName] = useState("Aves");
     const [description, setDescription] = useState("");
     const [mapUrl, setMapUrl] = useState("");
     const [extincion, setExtincion] = useState(false);
-    const [color, setColor] = useState("blanco");
+    const [color, setColor] = useState("Blanco");
     const [size, setSize] = useState(0);
     const [food, setFood] = useState("");
-    const [habitat, setHabitat] = useState("pradera");
+    const [habitat, setHabitat] = useState("Pradera");
     const [kingdom, setKingdom] = useState("Fauna");
     const [srcSound, setSrcSound] = useState("");
     const [soundUrl, setSoundUrl] = useState("");
@@ -113,14 +113,14 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
         setCommonName('');
         setScientificName('');
         setGenus('')
-        setClassName('aves');
+        setClassName('Aves');
         setDescription('');
         setMapUrl('');
         setExtincion(false);
-        setColor('blanco');
+        setColor('Blanco');
         setSize(0);
         setFood('');
-        setHabitat('pradera');
+        setHabitat('Pradera');
         setKingdom('Fauna');
         setSrcSound('');
         setInaturalistUrl('');

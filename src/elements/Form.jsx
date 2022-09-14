@@ -8,7 +8,7 @@
  */
 const Form = (props) => {
     const handleTypeSubmit = (evt) =>{
-        if(evt.target.id === 'inpt-type-fauna' && evt.target.checked){
+        if(evt.target.id === 'inpt-type-fauna' ){
             props.setKingdom("Fauna");
         }else{
             props.setKingdom("Flora");
@@ -57,7 +57,7 @@ const Form = (props) => {
                     disabled={!props.formState}
                     value={props.className}
                     onChange={(evt) => props.setClassName(evt.target.value)}>
-                    <option value='aves'>Aves</option>
+                    <option value='Aves'>Aves</option>
                     <option value='Mamíferos'>Mamíferos</option>
                     <option value='Reptiles'>Reptiles</option>
                     <option value='Anfibios'>Anfibios</option>
@@ -156,20 +156,38 @@ const Form = (props) => {
                 </select>
             </fieldset>
 
-            <fieldset>
-                <legend>Reino</legend>
-                <label htmlFor="inpt-type-fauna">Fauna</label>
-                <input type="radio" name="inpt-type" 
-                    id="inpt-type-fauna" defaultChecked
-                    disabled={!props.formState}
-                    onChange={handleTypeSubmit}/>
-
-                <label htmlFor="inpt-type-flora">Flora</label>
-                <input type="radio" name="inpt-type"
-                    id="inpt-type-flora"
-                    disabled={!props.formState}
-                    onChange={handleTypeSubmit}/>
-            </fieldset>
+            {props.kingdom === 'Fauna'?
+                <fieldset>
+                    <legend>Reino</legend>
+                    <label htmlFor="inpt-type-fauna">Fauna</label>
+                    <input type="radio" name="inpt-type" 
+                        id="inpt-type-fauna" defaultChecked
+                        disabled={!props.formState}
+                        onChange={handleTypeSubmit}/>
+    
+                    <label htmlFor="inpt-type-flora">Flora</label>
+                    <input type="radio" name="inpt-type"
+                        id="inpt-type-flora"
+                        disabled={!props.formState}
+                        onChange={handleTypeSubmit}/>
+                    
+                </fieldset>
+                :
+                <fieldset>
+                    <legend>Reino</legend>
+                    <label htmlFor="inpt-type-fauna">Fauna</label>
+                    <input type="radio" name="inpt-type" 
+                        id="inpt-type-fauna"
+                        disabled={!props.formState}
+                        onChange={handleTypeSubmit}/>
+    
+                    <label htmlFor="inpt-type-flora">Flora</label>
+                    <input type="radio" name="inpt-type"
+                        id="inpt-type-flora" defaultChecked
+                        disabled={!props.formState}
+                        onChange={handleTypeSubmit}/>
+                </fieldset>
+            }
 
             <fieldset>
                 <legend>Imágenes</legend>
