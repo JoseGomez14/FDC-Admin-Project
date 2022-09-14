@@ -5,6 +5,12 @@ import Footer from './components/main/Footer';
 import useGetSpecies from './hooks/useGetSpecies'
 import { NavLink } from 'react-router-dom'
 
+/**
+ * Componente encargado de mostrar la información de página principal
+ * muestra las especies que se han registrado y permite ir a cada una de ellas
+ * 
+ * @returns los elementos de la página principal
+ */
 function App() {
   const [loadState, setLoadState] = useState(true);
   const [species, getMoreSpecies, moreToLoad, empty] = useGetSpecies();

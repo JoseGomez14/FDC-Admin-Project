@@ -58,12 +58,12 @@ const Form = (props) => {
                     value={props.className}
                     onChange={(evt) => props.setClassName(evt.target.value)}>
                     <option value='aves'>Aves</option>
-                    <option value='mamiferos'>Mamíferos</option>
-                    <option value='reptiles'>Reptiles</option>
-                    <option value='anfibios'>Anfibios</option>
-                    <option value='insectos'>Insectos</option>
-                    <option value='plantas'>Plantas</option>
-                    <option value='hongos'>Hongos</option>
+                    <option value='Mamíferos'>Mamíferos</option>
+                    <option value='Reptiles'>Reptiles</option>
+                    <option value='Anfibios'>Anfibios</option>
+                    <option value='Insectos'>Insectos</option>
+                    <option value='Plantas'>Plantas</option>
+                    <option value='Hongos'>Hongos</option>
                 </select>
             </fieldset>
 
@@ -103,17 +103,17 @@ const Form = (props) => {
                     disabled={!props.formState}
                     value={props.color}
                     onChange={(evt) => props.setColor(evt.target.value)}>
-                    <option value='negro'>Negro</option>
-                    <option value='blanco'>Blanco</option>
-                    <option value='azul'>Azul</option>
-                    <option value='verde'>Verde</option>
-                    <option value='rojo'>Rojo</option>
-                    <option value='amarillo'>Amarillo</option>
-                    <option value='rosa'>Rosa</option>
-                    <option value='anaranjado'>Anaranjado</option>
-                    <option value='morado'>Morado</option>
-                    <option value='cafe'>Café</option>
-                    <option value='gris'>Gris</option>
+                    <option value='Negro'>Negro</option>
+                    <option value='Blanco'>Blanco</option>
+                    <option value='Azul'>Azul</option>
+                    <option value='Verde'>Verde</option>
+                    <option value='Rojo'>Rojo</option>
+                    <option value='Amarillo'>Amarillo</option>
+                    <option value='Rosa'>Rosa</option>
+                    <option value='Anaranjado'>Anaranjado</option>
+                    <option value='Morado'>Morado</option>
+                    <option value='Café'>Café</option>
+                    <option value='Gris'>Gris</option>
                 </select>
 
                 <label htmlFor="inpt-size-species">Tamaño aprox. en centímetros</label>
@@ -141,18 +141,18 @@ const Form = (props) => {
                     disabled={!props.formState}
                     value={props.habitat}
                     onChange={(evt) => props.setHabitat(evt.target.value)}>
-                    <option value='pradera'>Pradera</option>
-                    <option value='bosque'>Bosque</option>
-                    <option value='desierto'>Desierto</option>
-                    <option value='montana'>Montaña</option>
-                    <option value='marisma'>Marisma</option>
-                    <option value='sabana'>Sabana</option>
-                    <option value='altiplano'>Altiplano</option>
-                    <option value='quebrada'>Quebrada</option>
-                    <option value='lago'>Lago</option>
-                    <option value='pantano'>Pantano</option>
-                    <option value='rio'>Río</option>
-                    <option value='playa'>Playa</option>
+                    <option value='Pradera'>Pradera</option>
+                    <option value='Bosque'>Bosque</option>
+                    <option value='Desierto'>Desierto</option>
+                    <option value='Montaña'>Montaña</option>
+                    <option value='Marisma'>Marisma</option>
+                    <option value='Sabana'>Sabana</option>
+                    <option value='Altiplano'>Altiplano</option>
+                    <option value='Quebrada'>Quebrada</option>
+                    <option value='Lago'>Lago</option>
+                    <option value='Pantano'>Pantano</option>
+                    <option value='Río'>Río</option>
+                    <option value='Playa'>Playa</option>
                 </select>
             </fieldset>
 
