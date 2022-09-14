@@ -95,7 +95,7 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
                         setFormState(false);
                         setSpecie(new Specie(commonName, scientificName, kingdom, className, genus,
                             description, habitat, extincion, mapUrl, color, size,
-                            food, images, sound, srcSound, inaturalistUrl));
+                            food, images, soundUrl, srcSound, inaturalistUrl));
                         await createSpecies();
                         clearForm();
                     }
