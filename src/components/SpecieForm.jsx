@@ -18,11 +18,24 @@ import Form from '../elements/Form';
  * @returns Un elemento que es un formulario con los campos para crear y modificar una espcie
  */
 const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, sound, setSound }) => {
+    
     const [formState, setFormState] = useState(true);
     const [commonName, setCommonName] = useState("");
     const [scientificName, setScientificName] = useState("");
+    const [genus, setGenus] = useState("");
+    const [className, setClassName] = useState("aves");
+    const [description, setDescription] = useState("");
+    const [mapUrl, setMapUrl] = useState("");
+    const [extincion, setExtincion] = useState(false);
+    const [color, setColor] = useState("blanco");
+    const [size, setSize] = useState(0);
+    const [food, setFood] = useState("");
+    const [habitat, setHabitat] = useState("pradera");
+    const [kingdom, setKingdom] = useState("Fauna");
+    const [srcSound, setSrcSound] = useState("");
     const [soundUrl, setSoundUrl] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
+    const [inaturalistUrl, setInaturalistUrl] = useState("");
 
     /**
      * Se hace uso de hook useEffect para cargar la información al formulario en caso
@@ -32,9 +45,21 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
     useEffect(() => {
         if (specie) {
             setCommonName(specie.commonName);
-            setScientificName(specie.scientificName)
-            setSoundUrl(specie.sound)
+            setScientificName(specie.scientificName);
+            setGenus(specie.genus);
+            setClassName(specie.className);
+            setDescription(specie.description);
+            setMapUrl(specie.mapUrl);
+            setExtincion(specie.state);
+            setColor(specie.skinColor);
+            setSize(specie.size);
+            setFood(specie.food);
+            setHabitat(specie.habitat);
+            setKingdom(specie.kingdom);
+            setSoundUrl(specie.sound);
             setImageUrls(specie.images);
+            setSrcSound(specie.srcSound);
+            setInaturalistUrl(specie.inaturalistUrl);
         }
 
         return ()=>{
@@ -58,12 +83,9 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
         if (specie) {
             setFormState(false);
             await updateSpecie(id,
-                new Specie(
-                    commonName,
-                    scientificName,
-                    imageUrls,
-                    soundUrl
-                )
+                new Specie(commonName, scientificName, kingdom, className, genus,
+                    description, habitat, extincion, mapUrl, color, size,
+                    food, imageUrls, soundUrl, srcSound, inaturalistUrl)
             );
             setFormState(true);
         } else {
@@ -71,16 +93,37 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
                 if (images.length >= 1 && images.length <= 4) {
                     if (verifyImageSize(images)) {
                         setFormState(false);
-                        setSpecie(new Specie(commonName, scientificName, images, sound));
+                        setSpecie(new Specie(commonName, scientificName, kingdom, className, genus,
+                            description, habitat, extincion, mapUrl, color, size,
+                            food, images, sound, srcSound, inaturalistUrl));
                         await createSpecies();
-                        setCommonName('');
-                        setScientificName('');
+                        clearForm();
                     }
                 }else{
                     alert("El número máximo de imagenes es 4 y el mínimo es 1");
                 }
             }
         }
+    }
+
+    /**
+     * Permite restablecer el formulario a su estado inicial
+     */
+    const clearForm = ()=>{
+        setCommonName('');
+        setScientificName('');
+        setGenus('')
+        setClassName('aves');
+        setDescription('');
+        setMapUrl('');
+        setExtincion(false);
+        setColor('blanco');
+        setSize(0);
+        setFood('');
+        setHabitat('pradera');
+        setKingdom('Fauna');
+        setSrcSound('');
+        setInaturalistUrl('');
     }
 
     /**
@@ -107,8 +150,32 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             setCommonName={setCommonName}
             scientificName={scientificName}
             setScientificName={setScientificName}
+            genus={genus}
+            setGenus={setGenus}
+            className={className}
+            setClassName={setClassName}
+            description={description}
+            setDescription={setDescription}
+            mapUrl={mapUrl}
+            setMapUrl={setMapUrl}
+            extincion={extincion}
+            setExtincion={setExtincion}
+            color={color}
+            setColor={setColor}
+            size={size}
+            setSize={setSize}
+            food={food}
+            setFood={setFood}
+            habitat={habitat}
+            setHabitat={setHabitat}
+            kingdom={kingdom}
+            setKingdom={setKingdom}
+            srcSound={srcSound}
+            setSrcSound={setSrcSound}
             setImages={setImages}
             setSound={setSound}
+            inaturalistUrl={inaturalistUrl}
+            setInaturalistUrl={setInaturalistUrl}
         ></Form>
     );
 }

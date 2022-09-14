@@ -30,24 +30,25 @@ export class Specie{
      * @param {string[]} images Conjunto de urls de las imágenes asociadas a la especie
      * @param {string} sound Url del sonido asociado a la especie
      */
-    constructor(commonName, scientificName, images, sound){
-        this.#commonName = commonName;
+    constructor(commonName, scientificName, kingdom, className, genus, description, habitat, state, mapUrl,
+        skinColor, size, food, images, sound, srcSound, inaturalistUrl){
+        this.#id             = "";
+        this.#commonName     = commonName;
         this.#scientificName = scientificName;
-        this.#kingdom = "";
-        this.#images = images;
-        this.#sound = sound;
-        this.#id = "";
-        this.#className = "";
-        this.#genus = "";
-        this.#description = "";
-        this.#habitat = "";
-        this.#state = "";
-        this.#mapUrl = "";
-        this.#skinColor = "";
-        this.#size = "";
-        this.#food = "";
-        this.#inaturalistUrl = "";
-        this.#srcSound = "";
+        this.#kingdom        = kingdom     || "";
+        this.#className      = className;
+        this.#genus          = genus       || "";
+        this.#description    = description || "";
+        this.#habitat        = habitat || "";
+        this.#state          = state   || "";
+        this.#mapUrl         = mapUrl  || "";
+        this.#skinColor      = skinColor;
+        this.#size           = size || 0;
+        this.#food           = food || "";
+        this.#images         = images;
+        this.#sound          = sound;
+        this.#inaturalistUrl = inaturalistUrl || "";
+        this.#srcSound       = srcSound       || "";
     }
 
     /**Getters and setters */
