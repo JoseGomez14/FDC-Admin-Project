@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import loginUser from '../../firebase/loginUser';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 import icon from '../../images/icon.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Este componente se encarga de gestionar el formulario de inicio de sesión
@@ -42,29 +44,35 @@ const Login = () => {
                 style={{background: '#FFF', height: '90%'}}>
                 <h1 className='text-primary'><b>Inicio de sesión</b></h1>
                 <img src={icon} alt="Icono Fuera de Contexto" height='200px' className='mb-4'/>
-                <Form onSubmit={handleLogin} className="w-100" style={{maxWidth: '400px'}}>
+                <Form onSubmit={handleLogin} className="w-100" style={{maxWidth: '400px', color: '#666'}}>
                     <Form.Group className="mb-4" controlId='inpt-email'>
-                        <Form.Label className="fs-5">Correo electrónico</Form.Label>
-                        <Form.Control
-                            required
-                            size="lg"
-                            type="email"
-                            value={email}
-                            autoComplete='username'
-                            onChange={(evt) => setEmail(evt.target.value)}
-                        />
+                        <Form.Label className="fs-5"><b>Correo electrónico</b></Form.Label>
+                        <InputGroup>
+                            <InputGroup.Text><FontAwesomeIcon icon={faUser}/></InputGroup.Text>
+                            <Form.Control
+                                required
+                                size="lg"
+                                type="email"
+                                value={email}
+                                autoComplete='username'
+                                onChange={(evt) => setEmail(evt.target.value)}
+                            />
+                        </InputGroup>
                     </Form.Group>
 
                     <Form.Group className="mb-4" controlId='inpt-password'>
-                        <Form.Label className="fs-5">Contraseña</Form.Label>
-                        <Form.Control 
-                            required
-                            size="lg"
-                            type="password"
-                            value={password}
-                            autoComplete='current-password'
-                            onChange={(evt) => setPassword(evt.target.value)}
-                        />
+                        <Form.Label className="fs-5"><b>Contraseña</b></Form.Label>
+                        <InputGroup>
+                            <InputGroup.Text><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
+                            <Form.Control 
+                                required
+                                size="lg"
+                                type="password"
+                                value={password}
+                                autoComplete='current-password'
+                                onChange={(evt) => setPassword(evt.target.value)}
+                            />
+                        </InputGroup>
                     </Form.Group>
 
                     <div className="d-grid col-3 mx-auto">
