@@ -1,4 +1,4 @@
-import { Button, Form as FormB, Row, Col } from "react-bootstrap";
+import { Button, Form as FormB, Row, Col, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -276,22 +276,24 @@ const Form = (props) => {
                 </Row>
             </FormB.Group>
 
-            <Button
-                variant={props.specie ? 'primary' : 'success'}
-                className="mb-3"
-                type="submit"
-                disabled={!props.formState}
-            >
-            {props.specie ? <FontAwesomeIcon icon={faEdit}/> : <FontAwesomeIcon icon={faPlus}/>}
-            {props.specie ? ' Editar' : ' Agregar'}
-            </Button>
-            {props.specie ?
-                <Button 
-                    variant='danger '
-                    className="mb-3 ms-2"
-                    onClick={props.handleDelete}>
-                        <FontAwesomeIcon icon={faTrash}/> Eliminar</Button> 
-            : <></>}
+            <Container className="text-center">
+                <Button
+                    variant={props.specie ? 'primary' : 'success'}
+                    className="mb-3 ms-3"
+                    type="submit"
+                    disabled={!props.formState}
+                >
+                {props.specie ? <FontAwesomeIcon icon={faEdit}/> : <FontAwesomeIcon icon={faPlus}/>}
+                {props.specie ? ' Editar' : ' Agregar'}
+                </Button>
+                {props.specie ?
+                    <Button 
+                        variant='danger '
+                        className="mb-3 ms-4"
+                        onClick={props.handleDelete}>
+                            <FontAwesomeIcon icon={faTrash}/> Eliminar</Button> 
+                : <></>}
+            </Container>
         </FormB>
     );
 }

@@ -12,7 +12,7 @@ const Page404 = () => {
         <Container className='d-flex flex-column text-center mt-5'>
             <p className='display-2 fw-bold' style={{color: '#00BFA6'}}>¡Error 404!</p>
             <h1 className='mb-4'><b>La página que buscas no se encuentra en esta URL</b></h1>
-            <NotFoundIcon className='mx-auto mb-4' style={{maxHeight: '50vh'}}/>
+            <NotFoundIcon className='mx-auto mb-4' style={{maxHeight: '50vh', maxWidth: '90vw'}}/>
             <NavLink to={'/'} className='text-decoration-none'><h3>Ir al sitio principal</h3></NavLink>
         </Container>
     </> );
