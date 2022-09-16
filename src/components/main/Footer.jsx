@@ -1,4 +1,5 @@
 import React from 'react'
+import { Container } from 'react-bootstrap';
 
 /**
  * Este componente contiene el HTML del footer
@@ -7,7 +8,10 @@ import React from 'react'
 const Footer = () => {
     return ( 
         <footer>
-            <h1>Pie de página</h1>
+            <Container fluid className='float-start py-3' style={{backgroundColor: '#086972', color: '#fff'}}>
+                <h3><b>Administrador | FDC</b></h3>
+                <p><em>"Investigadores de lo nuestro"</em></p>
+            </Container>
         </footer>
      );
 }
