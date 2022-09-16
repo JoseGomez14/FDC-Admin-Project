@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 import { Spinner, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Componente encargado de mostrar la información de página principal
@@ -39,7 +40,7 @@ function App() {
 
         <Row xs={1} sm={2} lg={3} xl={4}>
           {species.map((specie, index) => {
-            return <Col sm key={'species-main' + index}>
+            return <Col sm key={'species-main' + index} className='mb-4'>
               <Card>
                 <Card.Img src={specie.images[0]} alt={specie.commonName} width='100%' style={{height:' 200px', objectFit: 'cover', borderBottom: '2px solid #44BBA4'}}/>
                 <Card.Body>
@@ -52,14 +53,15 @@ function App() {
           })
           }
         </Row>
-
-        {moreToLoad &&
-          <Row>
-            <Col>
-              <Button variant='success' className='my-4' onClick={() => getMoreSpecies()}>Cargar Más</Button>
-            </Col>
-          </Row>
-        }
+        
+        <Row>
+          <Col>
+            {moreToLoad &&
+              <Button variant='success' className='my-4 me-3' onClick={() => getMoreSpecies()}>Cargar Más</Button>
+            }
+            <Button variant='success' className='my-4' as={NavLink} to={'/create'}><FontAwesomeIcon icon={faPlus}/> Crear</Button>
+          </Col>
+        </Row>
 
         {empty &&
           <Row>
