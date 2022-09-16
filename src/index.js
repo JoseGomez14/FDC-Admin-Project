@@ -11,6 +11,7 @@ import Edit from './components/edit/Edit';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Page404 from './components/main/Page404';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -40,6 +41,10 @@ root.render(
                   <Edit />
                 </ProtectedRoute>
               } />
+            </Route>
+            <Route path='/*' element={
+              <Page404/>
+            }>
             </Route>
           </Routes>
         </BrowserRouter>
