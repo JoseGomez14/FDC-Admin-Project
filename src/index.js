@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute, ProtectedRouteLogin } from './components/ProtectedRoute';
@@ -14,33 +15,35 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={
-            <ProtectedRoute>
-              <App />
-            </ProtectedRoute>
-          } />
-          <Route path='/login' element={
-            <ProtectedRouteLogin>
-              <Login />
-            </ProtectedRouteLogin>
-          } />
-          <Route path='/create' element={
-            <ProtectedRoute>
-              <Create />
-            </ProtectedRoute>
-          } />
-          <Route path='/edit/'>
-            <Route path=':id' element={
+    <HelmetProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={
               <ProtectedRoute>
-                <Edit />
+                <App />
               </ProtectedRoute>
             } />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            <Route path='/login' element={
+              <ProtectedRouteLogin>
+                <Login />
+              </ProtectedRouteLogin>
+            } />
+            <Route path='/create' element={
+              <ProtectedRoute>
+                <Create />
+              </ProtectedRoute>
+            } />
+            <Route path='/edit/'>
+              <Route path=':id' element={
+                <ProtectedRoute>
+                  <Edit />
+                </ProtectedRoute>
+              } />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );

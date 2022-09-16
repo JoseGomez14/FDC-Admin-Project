@@ -1,4 +1,5 @@
 import React from 'react';
+import MetaTags from '../main/MetaTags';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import useGetSpecie from '../../hooks/useGetSpecie';
 import deleteSpecie from '../../firebase/deleteSpecie';
@@ -31,6 +32,7 @@ const Edit = () => {
 
     return (
         <>
+            <MetaTags title='Editar Especie | FDC'/>
             <Navbar brand='FDC' title= 'Administrador | FDC' full={true}/>
             <Container className='py-3'>
                 <NavLink to={'/'}>Volver al inicio</NavLink>
@@ -44,6 +46,7 @@ const Edit = () => {
                 {docState === 'empty' && <h3>La especie no se ha encontrado, <NavLink to={'/'}>vuelva al inicio</NavLink></h3>}
                 {docState === 'exists' &&
                     <div>
+                        <MetaTags title={'Editar | ' + specie.commonName + ' | FDC'}/>
                         <p>ID de la especie: {id}</p>
                         
                         <SpecieForm

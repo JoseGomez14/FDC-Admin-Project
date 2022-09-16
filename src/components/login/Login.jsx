@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
+import MetaTags from '../main/MetaTags';
 import { useNavigate } from 'react-router-dom';
 import loginUser from '../../firebase/loginUser';
+import icon from '../../images/icon.png';
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import icon from '../../images/icon.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
@@ -39,16 +40,17 @@ const Login = () => {
     }
 
     return (
-        <main className='d-flex flex-column justify-content-center' style={{background: '#f4f4f4', height: '100vh'}}>
+        <main className='d-flex flex-column justify-content-center' style={{ background: '#f4f4f4', height: '100vh' }}>
+            <MetaTags title='Inicio de Sesión | FDC'/>
             <div className='container mx-auto px-4 d-flex flex-column justify-content-center align-items-center rounded overflow-auto'
-                style={{background: '#FFF', height: '90%'}}>
+                style={{ background: '#FFF', height: '90%' }}>
                 <h1 className='text-primary'><b>Inicio de sesión</b></h1>
-                <img src={icon} alt="Icono Fuera de Contexto" height='200px' className='mb-4'/>
-                <Form onSubmit={handleLogin} className="w-100" style={{maxWidth: '400px', color: '#666'}}>
+                <img src={icon} alt="Icono Fuera de Contexto" height='200px' className='mb-4' />
+                <Form onSubmit={handleLogin} className="w-100" style={{ maxWidth: '400px', color: '#666' }}>
                     <Form.Group className="mb-4" controlId='inpt-email'>
                         <Form.Label className="fs-5"><b>Correo electrónico</b></Form.Label>
                         <InputGroup>
-                            <InputGroup.Text><FontAwesomeIcon icon={faUser}/></InputGroup.Text>
+                            <InputGroup.Text><FontAwesomeIcon icon={faUser} /></InputGroup.Text>
                             <Form.Control
                                 required
                                 size="lg"
@@ -63,8 +65,8 @@ const Login = () => {
                     <Form.Group className="mb-4" controlId='inpt-password'>
                         <Form.Label className="fs-5"><b>Contraseña</b></Form.Label>
                         <InputGroup>
-                            <InputGroup.Text><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
-                            <Form.Control 
+                            <InputGroup.Text><FontAwesomeIcon icon={faLock} /></InputGroup.Text>
+                            <Form.Control
                                 required
                                 size="lg"
                                 type="password"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MetaTags from '../main/MetaTags';
 import { Specie } from '../../model/Specie';
 import { storage, dataBase } from '../../firebase/firebaseConfig';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -135,6 +136,7 @@ const Create = () => {
 
     return (
         <>
+            <MetaTags title='Agregar Especie | FDC'/>
             <Navbar brand='FDC' title= 'Administrador | FDC' full={false}/>
             <Container className='py-3'>
                 <NavLink to={'/'}>Volver al inicio</NavLink>
