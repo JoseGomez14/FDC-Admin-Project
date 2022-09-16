@@ -3,6 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { auth } from '../../firebase/firebaseConfig'
 import { signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { Button, Container, Nav } from 'react-bootstrap';
+import { Navbar as NavbarB } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Este componente contiene el HTML del navbar que contiene enlaces de navegación y la posibilidad
@@ -26,25 +30,15 @@ const Navbar = () => {
     }
 
     return (
-        <nav>
-            <ul>
-                <li>
-                    <NavLink to={'/'}>
-                        Inicio
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to={'/create'}>
-                        Crear
-                    </NavLink>
-                </li>
-                <li>
-                    <button onClick={handleLogout}>
-                        Cerrar sesión
-                    </button>
-                </li>
-            </ul>
-        </nav>
+        <NavbarB bg='dark' variant='dark'>
+            <Container>
+                <NavbarB.Brand as={NavLink} to={'/'} title='Administrador | Fuera de Contexto'><b>FDC</b></NavbarB.Brand>
+                <Nav>
+                    <Button variant='success' as={NavLink} to={'/create'} className='me-3'><FontAwesomeIcon icon={faPlus}/> Crear</Button>
+                    <Button variant='danger' onClick={handleLogout} title='Cerrar Sesión'><FontAwesomeIcon icon={faSignOutAlt}/> Salir</Button>
+                </Nav>
+            </Container>
+        </NavbarB>
     );
 }
 
