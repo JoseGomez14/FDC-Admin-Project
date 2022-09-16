@@ -21,7 +21,7 @@ const Form = (props) => {
     return (
         <FormB onSubmit={props.handleSubmit}>
             <FormB.Group>
-                <legend className="mt-2">Taxonomía</legend>
+                <legend className="mt-2 fw-semibold">Taxonomía</legend>
                 <Row xs={1} sm={2} lg={3}>
                     <Col>
                         <FormB.Label htmlFor="inpt-common-name-species">Nombre común</FormB.Label><br />
@@ -86,7 +86,7 @@ const Form = (props) => {
             </FormB.Group>
 
             <FormB.Group>
-                <legend className="mt-4">Información</legend>
+                <legend className="mt-4 fw-semibold">Información</legend>
                 <Row xs={1} sm={2} lg={3}>
                     <Col>
                         <FormB.Label htmlFor="inpt-description-species">Descripción</FormB.Label>
@@ -199,7 +199,7 @@ const Form = (props) => {
 
             {props.kingdom === 'Fauna'?
                 <FormB.Group>
-                    <legend className="mt-4">Reino</legend>
+                    <legend className="mt-4 fw-semibold">Reino</legend>
                     <FormB.Check type="radio" name="inpt-type" 
                         id="inpt-type-fauna" defaultChecked
                         label='Fauna'
@@ -216,7 +216,7 @@ const Form = (props) => {
                 </FormB.Group>
                 :
                 <FormB.Group>
-                    <legend className="mt-4">Reino</legend>
+                    <legend className="mt-4 fw-semibold">Reino</legend>
                     <FormB.Check type="radio" name="inpt-type" 
                         id="inpt-type-fauna"
                         label='Fauna'
@@ -233,7 +233,7 @@ const Form = (props) => {
             }
 
             <FormB.Group>
-                <legend className="mt-4">Imágenes</legend>
+                <legend className="mt-4 fw-semibold">Imágenes</legend>
                 <FormB.Label htmlFor="inpt-images-species">Registros fotográficos</FormB.Label>
                 <FormB.Control
                     type="file"
@@ -247,7 +247,7 @@ const Form = (props) => {
             </FormB.Group>
 
             <FormB.Group>
-                <legend className="mt-4">Sonido</legend>
+                <legend className="mt-4 fw-semibold">Sonido</legend>
                 <Row xs={1} md={2}>
                     <Col>
                         <FormB.Label htmlFor="inpt-sound-species">Registro de sonido</FormB.Label>    

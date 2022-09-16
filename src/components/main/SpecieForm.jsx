@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import updateSpecie from '../firebase/updateSpecie'
-import { Specie } from '../model/Specie'
-import Form from '../elements/Form';
+import updateSpecie from '../../firebase/updateSpecie'
+import { Specie } from '../../model/Specie'
+import Form from '../../elements/Form';
 
 /**
  * Este componente de react se encarga de gestionar el formulario que se usa tanto para crear
@@ -62,11 +62,13 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             setInaturalistUrl(specie.inaturalistUrl);
         }
 
+        if(images){
+            if(images.length === undefined) setFormState(true)
+        }
+
         return ()=>{
             if(images){
-                if(images.length === 0){
-                    setFormState(true);
-                }
+                if(images.length === undefined) setFormState(true)
             }
         }
 

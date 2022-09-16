@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { auth } from '../../firebase/firebaseConfig'
+import { auth } from '../firebase/firebaseConfig'
 import { signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Nav } from 'react-bootstrap';

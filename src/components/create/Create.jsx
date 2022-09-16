@@ -6,8 +6,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { NavLink } from 'react-router-dom';
-import SpecieForm from '../SpecieForm';
-import Navbar from '../main/Navbar';
+import SpecieForm from '../main/SpecieForm';
+import Navbar from '../../elements/Navbar';
 import { Container } from 'react-bootstrap';
 
 /**
@@ -139,8 +139,8 @@ const Create = () => {
             <MetaTags title='Agregar Especie | FDC'/>
             <Navbar brand='FDC' title= 'Administrador | FDC' full={false}/>
             <Container className='py-3'>
-                <NavLink to={'/'}>Volver al inicio</NavLink>
-                <h2>Agregar una especie</h2>
+                <NavLink to={'/'} className='text-decoration-none'>Volver al inicio</NavLink>
+                <h2><b>Agregar especie</b></h2>
                 <SpecieForm
                     setSpecie={setSpecie}
                     createSpecies={createSpecies}

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
 import { Routes, Route } from 'react-router-dom';
-import { ProtectedRoute, ProtectedRouteLogin } from './components/ProtectedRoute';
+import { ProtectedRoute, ProtectedRouteLogin } from './components/main/ProtectedRoute';
 import App from './App';
 import Login from './components/login/Login';
 import Create from './components/create/Create';

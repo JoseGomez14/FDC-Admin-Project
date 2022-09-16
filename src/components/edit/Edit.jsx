@@ -3,8 +3,8 @@ import MetaTags from '../main/MetaTags';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import useGetSpecie from '../../hooks/useGetSpecie';
 import deleteSpecie from '../../firebase/deleteSpecie';
-import SpecieForm from '../SpecieForm';
-import Navbar from '../main/Navbar';
+import SpecieForm from '../main/SpecieForm';
+import Navbar from '../../elements/Navbar';
 import { Container, Spinner } from 'react-bootstrap';
 
 /**
@@ -35,8 +35,8 @@ const Edit = () => {
             <MetaTags title='Editar Especie | FDC'/>
             <Navbar brand='FDC' title= 'Administrador | FDC' full={true}/>
             <Container className='py-3'>
-                <NavLink to={'/'}>Volver al inicio</NavLink>
-                <h2>Editar una especie</h2>
+                <NavLink to={'/'} className='text-decoration-none'>Volver al inicio</NavLink>
+                <h2><b>Editar especie</b></h2>
 
                 {docState === 'load' && 
                     <Container className='d-flex'>

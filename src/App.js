@@ -1,8 +1,8 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import MetaTags from './components/main/MetaTags';
-import Navbar from './components/main/Navbar';
-import Footer from './components/main/Footer';
+import Navbar from './elements/Navbar';
+import Footer from './elements/Footer';
 import useGetSpecies from './hooks/useGetSpecies'
 import { NavLink } from 'react-router-dom'
 import { Spinner, Container, Row, Col, Card, Button } from 'react-bootstrap';
@@ -56,6 +56,14 @@ function App() {
           }
         </Row>
         
+        {empty &&
+          <Row>
+            <Col>
+              <h3>No hay especies registradas.</h3>
+            </Col>
+          </Row>
+        }
+
         <Row>
           <Col>
             {moreToLoad &&
@@ -64,15 +72,6 @@ function App() {
             <Button variant='success' className='my-4' as={NavLink} to={'/create'}><FontAwesomeIcon icon={faPlus}/> Crear</Button>
           </Col>
         </Row>
-
-        {empty &&
-          <Row>
-            <Col>
-              <h3>No hay especies registradas.</h3>
-              <NavLink to="/create">Agregar Especies</NavLink>
-            </Col>
-          </Row>
-        }
       </Container>
       <Footer />
     </div>
