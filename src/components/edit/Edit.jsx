@@ -7,6 +7,7 @@ import Confirm from '../../elements/Confirm';
 import SpecieForm from '../main/SpecieForm';
 import Navbar from '../../elements/Navbar';
 import { Container, Spinner } from 'react-bootstrap';
+import QrCode from '../../elements/QrCode';
 
 /**
  * Este componente se encarga identificar las especie que se desea editar, habilitar la posibilidad
@@ -66,6 +67,8 @@ const Edit = () => {
                             specie={specie}
                             handleDelete={handleDelete}
                         />
+
+                        <QrCode text={id} label={'QR | ' + specie.commonName}/>
                     </div>
                 }
             </Container>
