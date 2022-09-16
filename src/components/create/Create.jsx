@@ -7,6 +7,7 @@ import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { NavLink } from 'react-router-dom';
 import SpecieForm from '../SpecieForm';
 import Navbar from '../main/Navbar';
+import { Container } from 'react-bootstrap';
 
 /**
  * Create es un componente de React que se encarga de gestionar la creación de
@@ -134,17 +135,19 @@ const Create = () => {
 
     return (
         <>
-            <Navbar brand='Agregar Especie' title= 'Agregar una especie | FDC' full={false}/>
-            <h1>Agregar una especie</h1>
-            <NavLink to={'/'}>Volver al inicio</NavLink>
-            <SpecieForm
-                setSpecie={setSpecie}
-                createSpecies={createSpecies}
-                images={images}
-                setImages={setImages}
-                sound={sound}
-                setSound={setSound}
-            />
+            <Navbar brand='FDC' title= 'Administrador | FDC' full={false}/>
+            <Container className='py-3'>
+                <NavLink to={'/'}>Volver al inicio</NavLink>
+                <h2>Agregar una especie</h2>
+                <SpecieForm
+                    setSpecie={setSpecie}
+                    createSpecies={createSpecies}
+                    images={images}
+                    setImages={setImages}
+                    sound={sound}
+                    setSound={setSound}
+                />
+            </Container>
         </>
     );
 }
