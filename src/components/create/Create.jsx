@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { NavLink } from 'react-router-dom';
 import SpecieForm from '../SpecieForm';
+import Navbar from '../main/Navbar';
 
 /**
  * Create es un componente de React que se encarga de gestionar la creación de
@@ -133,6 +134,7 @@ const Create = () => {
 
     return (
         <>
+            <Navbar brand='Agregar Especie' title= 'Agregar una especie | FDC' full={false}/>
             <h1>Agregar una especie</h1>
             <NavLink to={'/'}>Volver al inicio</NavLink>
             <SpecieForm

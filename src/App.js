@@ -27,9 +27,9 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar brand='FDC' title='Administrador | Fuera de Contexto' full={true}/>
       <h3 className='my-4'><b>Especies registradas</b></h3>
-      <Container style={{minHeight: '70vh'}}>
+      <Container style={{minHeight: '68.5vh'}}>
         {loadState &&
           <Row>
             <Col>

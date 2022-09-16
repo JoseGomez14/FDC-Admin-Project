@@ -14,7 +14,7 @@ import { faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
  * 
  * @returns Retorna el Navbar
  */
-const Navbar = () => {
+const Navbar = ({brand, title, full}) => {
     const navigate = useNavigate();
 
     /**
@@ -32,11 +32,13 @@ const Navbar = () => {
     return (
         <NavbarB bg='dark' variant='dark'>
             <Container>
-                <NavbarB.Brand as={NavLink} to={'/'} title='Administrador | Fuera de Contexto'><b>FDC</b></NavbarB.Brand>
-                <Nav>
-                    <Button variant='success' as={NavLink} to={'/create'} className='me-3'><FontAwesomeIcon icon={faPlus}/> Crear</Button>
-                    <Button variant='danger' onClick={handleLogout} title='Cerrar Sesión'><FontAwesomeIcon icon={faSignOutAlt}/> Salir</Button>
-                </Nav>
+                <NavbarB.Brand as={NavLink} to={'/'} title={title}><h3><b>{brand}</b></h3></NavbarB.Brand>
+                {full &&
+                    <Nav>
+                        <Button variant='success' as={NavLink} to={'/create'} className='me-3'><FontAwesomeIcon icon={faPlus}/> Crear</Button>
+                        <Button variant='danger' onClick={handleLogout} title='Cerrar Sesión'><FontAwesomeIcon icon={faSignOutAlt}/> Salir</Button>
+                    </Nav>
+                }
             </Container>
         </NavbarB>
     );
