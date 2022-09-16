@@ -1,6 +1,6 @@
 import { Button, Form as FormB, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Este componente es el formulario en HTML que contiene los campos necesarios para crear
@@ -285,6 +285,13 @@ const Form = (props) => {
             {props.specie ? <FontAwesomeIcon icon={faEdit}/> : <FontAwesomeIcon icon={faPlus}/>}
             {props.specie ? ' Editar' : ' Agregar'}
             </Button>
+            {props.specie ?
+                <Button 
+                    variant='danger '
+                    className="mb-3 ms-2"
+                    onClick={props.handleDelete}>
+                        <FontAwesomeIcon icon={faTrash}/> Eliminar</Button> 
+            : <></>}
         </FormB>
     );
 }

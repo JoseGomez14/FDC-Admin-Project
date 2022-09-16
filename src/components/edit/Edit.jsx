@@ -4,9 +4,7 @@ import useGetSpecie from '../../hooks/useGetSpecie';
 import deleteSpecie from '../../firebase/deleteSpecie';
 import SpecieForm from '../SpecieForm';
 import Navbar from '../main/Navbar';
-import { Button, Container } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Container, Spinner } from 'react-bootstrap';
 
 /**
  * Este componente se encarga identificar las especie que se desea editar, habilitar la posibilidad
@@ -38,8 +36,12 @@ const Edit = () => {
                 <NavLink to={'/'}>Volver al inicio</NavLink>
                 <h2>Editar una especie</h2>
 
-                {docState === 'load' && <h1>Cargando...</h1>}
-                {docState === 'empty' && <h1>La especie no se ha encontrado, <NavLink to={'/'}>vuelva al inicio</NavLink></h1>}
+                {docState === 'load' && 
+                    <Container className='d-flex'>
+                        <Spinner animation='border' variant='primary' className='mx-auto my-5'/>
+                    </Container>
+                }
+                {docState === 'empty' && <h3>La especie no se ha encontrado, <NavLink to={'/'}>vuelva al inicio</NavLink></h3>}
                 {docState === 'exists' &&
                     <div>
                         <p>ID de la especie: {id}</p>
@@ -47,9 +49,8 @@ const Edit = () => {
                         <SpecieForm
                             id={id}
                             specie={specie}
+                            handleDelete={handleDelete}
                         />
-
-                        <Button variant='danger' onClick={handleDelete}><FontAwesomeIcon icon={faTrash}/> Eliminar</Button>
                     </div>
                 }
             </Container>

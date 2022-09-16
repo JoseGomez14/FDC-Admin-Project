@@ -17,7 +17,7 @@ import Form from '../elements/Form';
  * @param {*} setSound función para modificar el sonido seleccionado
  * @returns Un elemento que es un formulario con los campos para crear y modificar una espcie
  */
-const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, sound, setSound }) => {
+const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, sound, setSound, handleDelete }) => {
     
     const [formState, setFormState] = useState(true);
     const [commonName, setCommonName] = useState("");
@@ -146,6 +146,7 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             handleSubmit={handleSubmit}
             formState={formState}
             specie={specie}
+            handleDelete={handleDelete}
             commonName={commonName}
             setCommonName={setCommonName}
             scientificName={scientificName}

@@ -57,7 +57,7 @@ function App() {
         <Row>
           <Col>
             {moreToLoad &&
-              <Button variant='success' className='my-4 me-3' onClick={() => getMoreSpecies()}>Cargar Más</Button>
+              <Button variant='primary' className='my-4 me-3' onClick={() => getMoreSpecies()}>Cargar Más</Button>
             }
             <Button variant='success' className='my-4' as={NavLink} to={'/create'}><FontAwesomeIcon icon={faPlus}/> Crear</Button>
           </Col>
