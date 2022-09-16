@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MetaTags from '../main/MetaTags';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import useGetSpecie from '../../hooks/useGetSpecie';
 import deleteSpecie from '../../firebase/deleteSpecie';
+import Confirm from '../../elements/Confirm';
 import SpecieForm from '../main/SpecieForm';
 import Navbar from '../../elements/Navbar';
 import { Container, Spinner } from 'react-bootstrap';
@@ -18,37 +19,48 @@ const Edit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [specie, docState] = useGetSpecie(id);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [deleteState, setDeleteState] = useState(false);
+
+    useEffect(() => {
+        if (deleteState === true) {
+            deleteSpecie(id, specie.images, specie.sound);
+            navigate('/');
+        }
+    }, [deleteState, id, navigate, specie, specie.sound])
 
     /**
      * Esta función asincrona se encarga de confirmar la eliminación de un registro y si es confirmado
      * proceder con la eliminación tanto de su registro como del contenido multimedia asociado a él
      */
-    const handleDelete = async ()=>{
-        if (window.confirm("¿Está seguro de eliminar el registro?")) {
-            await deleteSpecie(id, specie.images, specie.sound);
-            navigate('/');
-        }
+    const handleDelete = async () => {
+        setShowConfirm(true);
     }
 
     return (
         <>
-            <MetaTags title='Editar Especie | FDC'/>
-            <Navbar brand='FDC' title= 'Administrador | FDC' full={true}/>
+            <MetaTags title='Editar Especie | FDC' />
+            <Navbar brand='FDC' title='Administrador | FDC' full={true} />
+            <Confirm
+                show={showConfirm}
+                setShow={setShowConfirm}
+                setDeleteState={setDeleteState}
+            />
             <Container className='py-3'>
                 <NavLink to={'/'} className='text-decoration-none'>Volver al inicio</NavLink>
                 <h2><b>Editar especie</b></h2>
 
-                {docState === 'load' && 
+                {docState === 'load' &&
                     <Container className='d-flex'>
-                        <Spinner animation='border' variant='primary' className='mx-auto my-5'/>
+                        <Spinner animation='border' variant='primary' className='mx-auto my-5' />
                     </Container>
                 }
                 {docState === 'empty' && <h3>La especie no se ha encontrado, <NavLink to={'/'}>vuelva al inicio</NavLink></h3>}
                 {docState === 'exists' &&
                     <div>
-                        <MetaTags title={'Editar | ' + specie.commonName + ' | FDC'}/>
+                        <MetaTags title={'Editar | ' + specie.commonName + ' | FDC'} />
                         <p>ID de la especie: {id}</p>
-                        
+
                         <SpecieForm
                             id={id}
                             specie={specie}

@@ -80,7 +80,7 @@ const Create = () => {
     const createSpecies = () => {
         uploadFiles(images, 'image/jpeg', 'images');
         if (sound.length > 0){
-            uploadFiles(sound, 'audio/mpeg', 'sound')
+            uploadFiles(sound, 'audio/mpeg', 'sounds')
         }
     }
 
