@@ -7,22 +7,23 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
  * @param {string} password contraseña ingresada por el usuario
  * @param {useNavigate} navigate hook para la navegación por el sitio web
  */
-const loginUser = async (email, password, navigate) => {
+const loginUser = async (email, password, navigate, setAlert, setAlertState) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
         navigate('/');
     } catch (error) {
         switch (error.code) {
             case 'auth/wrong-password':
-                alert('La contraseña no es correcta.');
+                setAlert({text: 'La contraseña no es correcta.', variant: 'danger'});
                 break;
             case 'auth/user-not-found':
-                alert('No se encontro ninguna cuenta con este correo electrónico.');
+                setAlert({text: 'No se encontro ninguna cuenta con este correo electrónico.', variant: 'danger'});
                 break;
             default:
-                alert('Hubo un error al intentar crear la cuenta.');
+                setAlert({text: 'Hubo un error al intentar iniciar sesión', variant: 'danger'});
                 break;
         }
+        setAlertState(true);
     }
 }
  

@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import SpecieForm from '../main/SpecieForm';
 import Navbar from '../../elements/Navbar';
 import { Container } from 'react-bootstrap';
+import Alert from '../../elements/Alert';
 
 /**
  * Create es un componente de React que se encarga de gestionar la creación de
@@ -23,6 +24,8 @@ const Create = () => {
     const [sound, setSound] = useState({});
     const [soundUrl, setSoundUrl] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
+    const [alert, setAlert] = useState({})
+    const [alertState, setAlertState] = useState(false);
 
     /**
      * Se implento el hook de useEffect para identificar el momento en que se
@@ -46,7 +49,8 @@ const Create = () => {
             updateDoc(docRef, {
                 id: docRef.id
             })
-            alert("The doc was added");
+            setAlert({text: "¡La especie se agregó correctamente! :)", variant: 'success'});
+            setAlertState(true);
             clearForm();
         }
 
@@ -101,11 +105,11 @@ const Create = () => {
             uploadTask.on('state_changed',
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    if (progress === 100) alert("The file was uploaded")
+                    if (progress === 100) console.log("El archivo fue cargado")
                 },
                 (error) => {
                     if (error.code === 'storage/unauthorized') {
-                        alert("Usuario invalido, por favor realice el inicio de sesión")
+                        setAlert({text: "Usuario inválido, por favor realice el inicio de sesión", variant: 'danger'})
                     }
                 },
                 () => {
@@ -138,6 +142,12 @@ const Create = () => {
         <>
             <MetaTags title='Agregar Especie | FDC'/>
             <Navbar brand='FDC' title= 'Administrador | FDC' full={false}/>
+            <Alert 
+                text={alert.text}
+                variant={alert.variant}
+                alertState={alertState}
+                setAlertState={setAlertState}
+            />
             <Container className='py-3'>
                 <NavLink to={'/'} className='text-decoration-none'>Volver al inicio</NavLink>
                 <h2><b>Agregar especie</b></h2>

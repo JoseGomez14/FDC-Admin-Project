@@ -18,7 +18,7 @@ const Alert = ({ text, variant, alertState, setAlertState }) => {
 
     return (
         <>
-            <section className='position-absolute top-0 start-50 translate-middle-x'>
+            <section className='fixed-top start-50 translate-middle-x'>
                 <article className='pt-5'>
                     <AlertB show={alertState} variant={variant}>
                         <p style={{ fontSize: '22px', margin: '0 30px', textAlign: 'center' }}><b>{text}</b></p>

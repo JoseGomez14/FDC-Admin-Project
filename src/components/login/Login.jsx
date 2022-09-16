@@ -6,6 +6,7 @@ import icon from '../../images/icon.png';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import Alert from '../../elements/Alert';
 
 /**
  * Este componente se encarga de gestionar el formulario de inicio de sesión
@@ -16,6 +17,8 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [alert, setAlert] = useState({})
+    const [alertState, setAlertState] = useState(false);
 
     /**
      * Se encarga de verificar que la información ingresada cumpla con los requisitos y si es así
@@ -25,23 +28,31 @@ const Login = () => {
      */
     const handleLogin = async (evt) => {
         evt.preventDefault();
+        if (email === '' || password === '') {
+            setAlert({text: 'Debes completar todos los campos', variant: 'warning'})
+            setAlertState(true);
+            return;
+        }
+
         const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
         if (!expresionRegular.test(email)) {
-            alert("El correo no es válido")
+            setAlert({text: 'El correo no es válido', variant: 'danger'})
+            setAlertState(true);
             return;
         }
 
-        if (email === '' || password === '') {
-            alert('Debes completar todos los campos')
-            return;
-        }
-
-        loginUser(email, password, navigate)
+        loginUser(email, password, navigate, setAlert, setAlertState)
     }
 
     return (
         <main className='d-flex flex-column justify-content-center' style={{ background: '#f4f4f4', height: '100vh' }}>
             <MetaTags title='Inicio de Sesión | FDC'/>
+            <Alert 
+                text={alert.text}
+                variant={alert.variant}
+                alertState={alertState}
+                setAlertState={setAlertState}
+            />
             <div className='container mx-auto px-4 d-flex flex-column justify-content-center align-items-center rounded overflow-auto'
                 style={{ background: '#FFF', height: '90%' }}>
                 <h1 className='text-primary'><b>Inicio de sesión</b></h1>
@@ -52,7 +63,6 @@ const Login = () => {
                         <InputGroup>
                             <InputGroup.Text><FontAwesomeIcon icon={faUser} /></InputGroup.Text>
                             <Form.Control
-                                required
                                 size="lg"
                                 type="email"
                                 value={email}
@@ -67,7 +77,6 @@ const Login = () => {
                         <InputGroup>
                             <InputGroup.Text><FontAwesomeIcon icon={faLock} /></InputGroup.Text>
                             <Form.Control
-                                required
                                 size="lg"
                                 type="password"
                                 value={password}

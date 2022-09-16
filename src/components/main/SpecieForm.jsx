@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import updateSpecie from '../../firebase/updateSpecie'
 import { Specie } from '../../model/Specie'
 import Form from '../../elements/Form';
+import Alert from '../../elements/Alert';
 
 /**
  * Este componente de react se encarga de gestionar el formulario que se usa tanto para crear
@@ -18,7 +19,7 @@ import Form from '../../elements/Form';
  * @returns Un elemento que es un formulario con los campos para crear y modificar una espcie
  */
 const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, sound, setSound, handleDelete }) => {
-    
+
     const [formState, setFormState] = useState(true);
     const [commonName, setCommonName] = useState("");
     const [scientificName, setScientificName] = useState("");
@@ -36,6 +37,8 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
     const [soundUrl, setSoundUrl] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
     const [inaturalistUrl, setInaturalistUrl] = useState("");
+    const [alert, setAlert] = useState({})
+    const [alertState, setAlertState] = useState(false);
 
     /**
      * Se hace uso de hook useEffect para cargar la información al formulario en caso
@@ -62,13 +65,13 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             setInaturalistUrl(specie.inaturalistUrl);
         }
 
-        if(images){
-            if(images.length === undefined) setFormState(true)
+        if (images) {
+            if (images.length === undefined) setFormState(true)
         }
 
-        return ()=>{
-            if(images){
-                if(images.length === undefined) setFormState(true)
+        return () => {
+            if (images) {
+                if (images.length === undefined) setFormState(true)
             }
         }
 
@@ -87,11 +90,12 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             await updateSpecie(id,
                 new Specie(commonName, scientificName, kingdom, className, genus,
                     description, habitat, extincion, mapUrl, color, size,
-                    food, imageUrls, soundUrl, srcSound, inaturalistUrl)
+                    food, imageUrls, soundUrl, srcSound, inaturalistUrl),
+                    setAlert, setAlertState
             );
             setFormState(true);
         } else {
-            if(images){
+            if (images) {
                 if (images.length >= 1 && images.length <= 4) {
                     if (verifyImageSize(images)) {
                         setFormState(false);
@@ -101,8 +105,9 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
                         await createSpecies();
                         clearForm();
                     }
-                }else{
-                    alert("El número máximo de imagenes es 4 y el mínimo es 1");
+                } else {
+                    setAlert({text: "El número mínimo de imagenes es 1 y el máximo es 4", variant: 'warning'});
+                    setAlertState(true);
                 }
             }
         }
@@ -111,7 +116,7 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
     /**
      * Permite restablecer el formulario a su estado inicial
      */
-    const clearForm = ()=>{
+    const clearForm = () => {
         setCommonName('');
         setScientificName('');
         setGenus('')
@@ -133,10 +138,11 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
      * @param {File[]} files es el arreglo de imagenes a verificar
      * @returns retorna true si todas las imagenes tienen un tamaño inferior a 2MB
      */
-     const verifyImageSize = (files) => {
+    const verifyImageSize = (files) => {
         for (let i = 0; i < files.length; i++) {
             if (files[i].size > 2000000) {
-                alert('El tamaño de cada imagen no debe superar los 2 MB');
+                setAlert({text: 'El tamaño de cada imagen no debe superar los 2 MB', variant: 'warning'});
+                setAlertState(true);
                 return false;
             }
         }
@@ -144,42 +150,50 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
     }
 
     return (
-        <Form
-            handleSubmit={handleSubmit}
-            formState={formState}
-            specie={specie}
-            handleDelete={handleDelete}
-            commonName={commonName}
-            setCommonName={setCommonName}
-            scientificName={scientificName}
-            setScientificName={setScientificName}
-            genus={genus}
-            setGenus={setGenus}
-            className={className}
-            setClassName={setClassName}
-            description={description}
-            setDescription={setDescription}
-            mapUrl={mapUrl}
-            setMapUrl={setMapUrl}
-            extincion={extincion}
-            setExtincion={setExtincion}
-            color={color}
-            setColor={setColor}
-            size={size}
-            setSize={setSize}
-            food={food}
-            setFood={setFood}
-            habitat={habitat}
-            setHabitat={setHabitat}
-            kingdom={kingdom}
-            setKingdom={setKingdom}
-            srcSound={srcSound}
-            setSrcSound={setSrcSound}
-            setImages={setImages}
-            setSound={setSound}
-            inaturalistUrl={inaturalistUrl}
-            setInaturalistUrl={setInaturalistUrl}
-        ></Form>
+        <>
+            <Alert
+                text={alert.text}
+                variant={alert.variant}
+                alertState={alertState}
+                setAlertState={setAlertState}
+            />
+            <Form
+                handleSubmit={handleSubmit}
+                formState={formState}
+                specie={specie}
+                handleDelete={handleDelete}
+                commonName={commonName}
+                setCommonName={setCommonName}
+                scientificName={scientificName}
+                setScientificName={setScientificName}
+                genus={genus}
+                setGenus={setGenus}
+                className={className}
+                setClassName={setClassName}
+                description={description}
+                setDescription={setDescription}
+                mapUrl={mapUrl}
+                setMapUrl={setMapUrl}
+                extincion={extincion}
+                setExtincion={setExtincion}
+                color={color}
+                setColor={setColor}
+                size={size}
+                setSize={setSize}
+                food={food}
+                setFood={setFood}
+                habitat={habitat}
+                setHabitat={setHabitat}
+                kingdom={kingdom}
+                setKingdom={setKingdom}
+                srcSound={srcSound}
+                setSrcSound={setSrcSound}
+                setImages={setImages}
+                setSound={setSound}
+                inaturalistUrl={inaturalistUrl}
+                setInaturalistUrl={setInaturalistUrl}
+            ></Form>
+        </>
     );
 }
 
