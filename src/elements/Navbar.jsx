@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from '../firebase/firebaseConfig'
 import { signOut } from "firebase/auth";
+import { ReactComponent as IconNavbar } from '../images/IconAdminNavbar.svg';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Nav } from 'react-bootstrap';
 import { Navbar as NavbarB } from 'react-bootstrap';
@@ -14,7 +15,7 @@ import { faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
  * 
  * @returns Retorna el Navbar
  */
-const Navbar = ({brand, title, full}) => {
+const Navbar = ({title, full}) => {
     const navigate = useNavigate();
 
     /**
@@ -32,7 +33,9 @@ const Navbar = ({brand, title, full}) => {
     return (
         <NavbarB bg='dark' variant='dark'>
             <Container>
-                <NavbarB.Brand as={NavLink} to={'/'} title={title}><h3><b>{brand}</b></h3></NavbarB.Brand>
+                <NavbarB.Brand as={NavLink} to={'/'} title={title}>
+                    <IconNavbar height='32px'/>
+                </NavbarB.Brand>
                 {full &&
                     <Nav>
                         <Button variant='success' as={NavLink} to={'/create'} className='me-3'><FontAwesomeIcon icon={faPlus}/> Crear</Button>
