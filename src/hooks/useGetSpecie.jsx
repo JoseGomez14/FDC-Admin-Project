@@ -24,7 +24,7 @@ const useGetSpecie = (id) => {
             }
         }
     
-      return loadDoc
+      loadDoc();
     }, [id])
     
 
