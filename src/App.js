@@ -28,14 +28,14 @@ function App() {
 
   return (
     <div className="App">
-      <MetaTags title='Administrador | Fuera de Contexto'/>
-      <Navbar brand='FDC' title='Administrador | Fuera de Contexto' full={true}/>
+      <MetaTags title='Administrador | Fuera de Contexto' />
+      <Navbar brand='FDC' title='Administrador | Fuera de Contexto' full={true} />
       <h3 className='my-4'><b>Especies registradas</b></h3>
-      <Container style={{minHeight: '68.5vh'}}>
+      <Container style={{ minHeight: '69.5vh' }}>
         {loadState &&
           <Row>
             <Col>
-              <Spinner animation='border' variant='primary'/>
+              <Spinner animation='border' variant='primary' />
             </Col>
           </Row>
         }
@@ -44,18 +44,24 @@ function App() {
           {species.map((specie, index) => {
             return <Col sm key={'species-main' + index} className='mb-4'>
               <Card>
-                <Card.Img src={specie.images[0]} alt={specie.commonName} width='100%' style={{height:' 200px', objectFit: 'cover', borderBottom: '2px solid #44BBA4'}}/>
+                <Card.Img
+                  src={specie.images[0]}
+                  alt={specie.commonName}
+                  style={{ width: '100%', height: ' 200px', objectFit: 'cover', borderBottom: '2px solid #44BBA4' }}
+                />
                 <Card.Body>
                   <Card.Title><b>{specie.commonName}</b></Card.Title>
                   <Card.Subtitle><i>{specie.scientificName}</i></Card.Subtitle>
-                  <Button className='mt-3' variant='primary' as={NavLink} to={`/edit/${specie.id}`}><FontAwesomeIcon icon={faEdit}/> Editar</Button>
+                  <Button className='mt-3' variant='primary' as={NavLink} to={`/edit/${specie.id}`}>
+                    <FontAwesomeIcon icon={faEdit} /> Editar
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
           })
           }
         </Row>
-        
+
         {empty &&
           <Row>
             <Col>
@@ -67,9 +73,16 @@ function App() {
         <Row>
           <Col>
             {moreToLoad &&
-              <Button variant='primary' className='my-4 me-3' onClick={() => getMoreSpecies()}>Cargar Más</Button>
+              <Button
+                variant='primary'
+                className='my-4 me-3'
+                onClick={() => getMoreSpecies()}>
+                Cargar Más
+              </Button>
             }
-            <Button variant='success' className='my-4' as={NavLink} to={'/create'}><FontAwesomeIcon icon={faPlus}/> Crear</Button>
+            <Button variant='success' className='my-4' as={NavLink} to={'/create'}>
+              <FontAwesomeIcon icon={faPlus} /> Crear
+            </Button>
           </Col>
         </Row>
       </Container>
