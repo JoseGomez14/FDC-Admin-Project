@@ -68,7 +68,7 @@ const Edit = () => {
                             handleDelete={handleDelete}
                         />
 
-                        <QrCode text={id} label={'QR | ' + specie.commonName}/>
+                        <QrCode text={'fdc-web-project.web.app/about/' + id} label={'QR | ' + specie.commonName}/>
                     </div>
                 }
             </Container>
