@@ -3,7 +3,7 @@ import qrcode from 'qrcode-generator';
 
 const QrCode = ({ text, label }) => {
     let qr = qrcode(4, 'M');
-    qr.addData(`http://192.168.20.29:3000/about/${text}`);
+    qr.addData(text);
     qr.make();
     const qrImgUrl = qr.createDataURL(8);
     return (<>
