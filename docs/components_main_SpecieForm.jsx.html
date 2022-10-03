@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/main/SpecieForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/main/SpecieForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import updateSpecie from '../../firebase/updateSpecie'
+import { Specie } from '../../model/Specie'
+import Form from '../../elements/Form';
+import Alert from '../../elements/Alert';
+
+/**
+ * Este componente de react se encarga de gestionar el formulario que se usa tanto para crear
+ * una nueva espcie como para editarla dado que en ambos casos se requiere la misma información
+ * 
+ * @param {*} specie En caso de Edit se pasa una specie que contiene la información que ya está registrada
+ * @param {*} id el id que se tiene en firebase si está especie ya existe
+ * @param {*} setSpecie función de cambio de estado para modificar la especie
+ * @param {*} createSpecies función para ejecucar la creación de una nueva especie
+ * @param {*} images conjunto de imagenes que el usuario selecciona
+ * @param {*} setImages función para modificar las imagenes sellecionadas
+ * @param {*} sound sonido que el usuario selecciona
+ * @param {*} setSound función para modificar el sonido seleccionado
+ * @returns Un elemento que es un formulario con los campos para crear y modificar una espcie
+ */
+const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, sound, setSound, handleDelete }) => {
+
+    const [formState, setFormState] = useState(true);
+    const [commonName, setCommonName] = useState("");
+    const [scientificName, setScientificName] = useState("");
+    const [genus, setGenus] = useState("");
+    const [className, setClassName] = useState("Aves");
+    const [description, setDescription] = useState("");
+    const [mapUrl, setMapUrl] = useState("");
+    const [extincion, setExtincion] = useState(false);
+    const [color, setColor] = useState("Blanco");
+    const [size, setSize] = useState(0);
+    const [food, setFood] = useState("");
+    const [habitat, setHabitat] = useState("Pradera");
+    const [kingdom, setKingdom] = useState("Fauna");
+    const [srcSound, setSrcSound] = useState("");
+    const [soundUrl, setSoundUrl] = useState("");
+    const [imageUrls, setImageUrls] = useState([]);
+    const [inaturalistUrl, setInaturalistUrl] = useState("");
+    const [alert, setAlert] = useState({})
+    const [alertState, setAlertState] = useState(false);
+
+    /**
+     * Se hace uso de hook useEffect para cargar la información al formulario en caso
+     * de que la especie ya exista y el caso de uso se Edit y gestiona el estado del formulario
+     * cuando realizamos un submit para dejarlo inactivo mientras se procesa la solicitud
+     */
+    useEffect(() => {
+        if (specie) {
+            setCommonName(specie.commonName);
+            setScientificName(specie.scientificName);
+            setGenus(specie.genus);
+            setClassName(specie.className);
+            setDescription(specie.description);
+            setMapUrl(specie.mapUrl);
+            setExtincion(specie.state);
+            setColor(specie.skinColor);
+            setSize(specie.size);
+            setFood(specie.food);
+            setHabitat(specie.habitat);
+            setKingdom(specie.kingdom);
+            setSoundUrl(specie.sound);
+            setImageUrls(specie.images);
+            setSrcSound(specie.srcSound);
+            setInaturalistUrl(specie.inaturalistUrl);
+        }
+
+        if (images) {
+            if (images.length === undefined) setFormState(true)
+        }
+
+        return () => {
+            if (images) {
+                if (images.length === undefined) setFormState(true)
+            }
+        }
+
+    }, [images, specie])
+
+    /**
+     * Esta función se encarga de realizar la operciones de actualización de información o creación
+     * de espceie según sea el caso.
+     * 
+     * @param {*} evt información asociada al evento ocurrido
+     */
+    const handleSubmit = async (evt) => {
+        evt.preventDefault();
+        if (specie) {
+            setFormState(false);
+            await updateSpecie(id,
+                new Specie(commonName, scientificName, kingdom, className, genus,
+                    description, habitat, extincion, mapUrl, color, size,
+                    food, imageUrls, soundUrl, srcSound, inaturalistUrl),
+                    setAlert, setAlertState
+            );
+            setFormState(true);
+        } else {
+            if (images) {
+                if (images.length >= 1 &amp;&amp; images.length &lt;= 4) {
+                    if (verifyImageSize(images)) {
+                        setFormState(false);
+                        setSpecie(new Specie(commonName, scientificName, kingdom, className, genus,
+                            description, habitat, extincion, mapUrl, color, size,
+                            food, images, soundUrl, srcSound, inaturalistUrl));
+                        await createSpecies();
+                        clearForm();
+                    }
+                } else {
+                    setAlert({text: "El número mínimo de imagenes es 1 y el máximo es 4", variant: 'warning'});
+                    setAlertState(true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Permite restablecer el formulario a su estado inicial
+     */
+    const clearForm = () => {
+        setCommonName('');
+        setScientificName('');
+        setGenus('')
+        setClassName('Aves');
+        setDescription('');
+        setMapUrl('');
+        setExtincion(false);
+        setColor('Blanco');
+        setSize(0);
+        setFood('');
+        setHabitat('Pradera');
+        setKingdom('Fauna');
+        setSrcSound('');
+        setInaturalistUrl('');
+    }
+
+    /**
+     * Verifica que el tamaño de cada una de la imagenes cargadas no supere 2MB
+     * @param {File[]} files es el arreglo de imagenes a verificar
+     * @returns retorna true si todas las imagenes tienen un tamaño inferior a 2MB
+     */
+    const verifyImageSize = (files) => {
+        for (let i = 0; i &lt; files.length; i++) {
+            if (files[i].size > 2000000) {
+                setAlert({text: 'El tamaño de cada imagen no debe superar los 2 MB', variant: 'warning'});
+                setAlertState(true);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    return (
+        &lt;>
+            &lt;Alert
+                text={alert.text}
+                variant={alert.variant}
+                alertState={alertState}
+                setAlertState={setAlertState}
+            />
+            &lt;Form
+                handleSubmit={handleSubmit}
+                formState={formState}
+                specie={specie}
+                handleDelete={handleDelete}
+                commonName={commonName}
+                setCommonName={setCommonName}
+                scientificName={scientificName}
+                setScientificName={setScientificName}
+                genus={genus}
+                setGenus={setGenus}
+                className={className}
+                setClassName={setClassName}
+                description={description}
+                setDescription={setDescription}
+                mapUrl={mapUrl}
+                setMapUrl={setMapUrl}
+                extincion={extincion}
+                setExtincion={setExtincion}
+                color={color}
+                setColor={setColor}
+                size={size}
+                setSize={setSize}
+                food={food}
+                setFood={setFood}
+                habitat={habitat}
+                setHabitat={setHabitat}
+                kingdom={kingdom}
+                setKingdom={setKingdom}
+                srcSound={srcSound}
+                setSrcSound={setSrcSound}
+                setImages={setImages}
+                setSound={setSound}
+                inaturalistUrl={inaturalistUrl}
+                setInaturalistUrl={setInaturalistUrl}
+            >&lt;/Form>
+        &lt;/>
+    );
+}
+
+export default SpecieForm;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Specie.html">Specie</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Create">Create</a></li><li><a href="global.html#deleteSpecie">deleteSpecie</a></li><li><a href="global.html#Edit">Edit</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#IconFDC">IconFDC</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ProtectedRouteLogin">ProtectedRouteLogin</a></li><li><a href="global.html#SpecieForm">SpecieForm</a></li><li><a href="global.html#updateSpecie">updateSpecie</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useGetSpecie">useGetSpecie</a></li><li><a href="global.html#useGetSpecies">useGetSpecies</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 16:11:27 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

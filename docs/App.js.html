@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import './App.css';
+import React, { useEffect, useState } from 'react';
+import MetaTags from './components/main/MetaTags';
+import Navbar from './elements/Navbar';
+import Footer from './elements/Footer';
+import useGetSpecies from './hooks/useGetSpecies'
+import { NavLink } from 'react-router-dom'
+import { Spinner, Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+/**
+ * Componente encargado de mostrar la información de página principal
+ * muestra las especies que se han registrado y permite ir a cada una de ellas
+ * 
+ * @returns los elementos de la página principal
+ */
+function App() {
+  const [loadState, setLoadState] = useState(true);
+  const [species, getMoreSpecies, moreToLoad, empty] = useGetSpecies();
+
+  useEffect(() => {
+    if (species.length > 0 || empty) {
+      setLoadState(false)
+    }
+  }, [empty, species.length])
+
+  return (
+    &lt;div className="App">
+      &lt;MetaTags title='Administrador | Fuera de Contexto' />
+      &lt;Navbar brand='FDC' title='Administrador | Fuera de Contexto' full={true} />
+      &lt;h3 className='my-4'>&lt;b>Especies registradas&lt;/b>&lt;/h3>
+      &lt;Container style={{ minHeight: '69.5vh' }}>
+        {loadState &amp;&amp;
+          &lt;Row>
+            &lt;Col>
+              &lt;Spinner animation='border' variant='primary' />
+            &lt;/Col>
+          &lt;/Row>
+        }
+
+        &lt;Row xs={1} sm={2} lg={3} xl={4}>
+          {species.map((specie, index) => {
+            return &lt;Col sm key={'species-main' + index} className='mb-4'>
+              &lt;Card>
+                &lt;Card.Img
+                  src={specie.images[0]}
+                  alt={specie.commonName}
+                  style={{ width: '100%', height: ' 200px', objectFit: 'cover', borderBottom: '2px solid #44BBA4' }}
+                />
+                &lt;Card.Body>
+                  &lt;Card.Title>&lt;b>{specie.commonName}&lt;/b>&lt;/Card.Title>
+                  &lt;Card.Subtitle>&lt;i>{specie.scientificName}&lt;/i>&lt;/Card.Subtitle>
+                  &lt;Button className='mt-3' variant='primary' as={NavLink} to={`/edit/${specie.id}`}>
+                    &lt;FontAwesomeIcon icon={faEdit} /> Editar
+                  &lt;/Button>
+                &lt;/Card.Body>
+              &lt;/Card>
+            &lt;/Col>
+          })
+          }
+        &lt;/Row>
+
+        {empty &amp;&amp;
+          &lt;Row>
+            &lt;Col>
+              &lt;h3>No hay especies registradas.&lt;/h3>
+            &lt;/Col>
+          &lt;/Row>
+        }
+
+        &lt;Row>
+          &lt;Col>
+            {moreToLoad &amp;&amp;
+              &lt;Button
+                variant='primary'
+                className='my-4 me-3'
+                onClick={() => getMoreSpecies()}>
+                Cargar Más
+              &lt;/Button>
+            }
+            &lt;Button variant='success' className='my-4' as={NavLink} to={'/create'}>
+              &lt;FontAwesomeIcon icon={faPlus} /> Crear
+            &lt;/Button>
+          &lt;/Col>
+        &lt;/Row>
+      &lt;/Container>
+      &lt;Footer />
+    &lt;/div>
+  );
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Specie.html">Specie</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Create">Create</a></li><li><a href="global.html#deleteSpecie">deleteSpecie</a></li><li><a href="global.html#Edit">Edit</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#IconFDC">IconFDC</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ProtectedRouteLogin">ProtectedRouteLogin</a></li><li><a href="global.html#SpecieForm">SpecieForm</a></li><li><a href="global.html#updateSpecie">updateSpecie</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useGetSpecie">useGetSpecie</a></li><li><a href="global.html#useGetSpecies">useGetSpecies</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 16:11:27 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

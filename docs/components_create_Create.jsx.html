@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/create/Create.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/create/Create.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import MetaTags from '../main/MetaTags';
+import { Specie } from '../../model/Specie';
+import { storage, dataBase } from '../../firebase/firebaseConfig';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { collection, addDoc, updateDoc } from 'firebase/firestore';
+import { NavLink } from 'react-router-dom';
+import SpecieForm from '../main/SpecieForm';
+import Navbar from '../../elements/Navbar';
+import { Container } from 'react-bootstrap';
+import Alert from '../../elements/Alert';
+
+/**
+ * Create es un componente de React que se encarga de gestionar la creación de
+ * nuevos registros de especie, enviando la información a la base de datos.
+ * 
+ * @returns Retorna principalmente el componente de formulario para las 
+ * especies y elementos de navegación.
+ */
+const Create = () => {
+    const [specie, setSpecie] = useState(new Specie());
+    const [images, setImages] = useState({});
+    const [sound, setSound] = useState({});
+    const [soundUrl, setSoundUrl] = useState("");
+    const [imageUrls, setImageUrls] = useState([]);
+    const [alert, setAlert] = useState({})
+    const [alertState, setAlertState] = useState(false);
+
+    /**
+     * Se implento el hook de useEffect para identificar el momento en que se
+     * cargaron los recursos multimedia (Imagenes y sonidos) para luego enviar
+     * la información de la especie a la base de datos incluyendo los enlaces 
+     * de descargade los recursos mencionados.
+     */
+    useEffect(() => {
+        /**
+         * uploadToDB es la función encargada de crear el registro en la base de datos
+         * posterior a que se carga la información de la especie se realiza una actualización
+         * en el registro agregando en el mismo registro el id que le asigna firebase
+         * al momento de crearlo
+         */
+        const uploadToDB = async () => {
+            const docRef = await addDoc(
+                collection(dataBase, "species"),
+                specie.toJson()
+            );
+
+            updateDoc(docRef, {
+                id: docRef.id
+            })
+            setAlert({text: "¡La especie se agregó correctamente! :)", variant: 'success'});
+            setAlertState(true);
+            clearForm();
+        }
+
+        if (images.length === imageUrls.length &amp;&amp; images.length > 0) {
+            if (sound.length > 0) {
+                if (soundUrl.length > 0) {
+                    let specieAux = specie;
+                    specieAux.images = imageUrls;
+                    specieAux.sound = soundUrl;
+                    setSpecie(specieAux)
+                    uploadToDB(specie.toJson());
+                }
+            } else {
+                let specieAux = specie;
+                specieAux.images = imageUrls;
+                setSpecie(specieAux)
+                uploadToDB(specie.toJson());
+            }
+        }
+        return () => {
+        }
+    }, [imageUrls, images, sound, soundUrl, specie])
+
+    /**
+     * Se encarga invocar la carga de las imagenes y la carga del sonido
+     */
+    const createSpecies = () => {
+        uploadFiles(images, 'image/jpeg', 'images');
+        if (sound.length > 0){
+            uploadFiles(sound, 'audio/mpeg', 'sounds')
+        }
+    }
+
+    /**
+     * Realiza la carga de las archivos hacia el servicio de almacenamiento de firebase
+     * 
+     * @param {File[]} files conjunto de archivos a cargar
+     * @param {string} fileType tipo de archivo multimedia (audio/mpeg o image/jpeg)
+     * @param {string} folder ruta en la que se almacenará en firebase storage
+     */
+    const uploadFiles= async (files, fileType, folder) => {
+        const metadata = {
+            contentType: fileType
+        };
+
+        const extension = fileType === 'image/jpeg'? '.jpg': '.mp3';
+
+        for (let i = 0; i &lt; files.length; i++) {
+            const storageRef = ref(storage, folder + '/' + uuidv4() + extension);
+            const uploadTask = uploadBytesResumable(storageRef, files[i], metadata);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    if (progress === 100) console.log("El archivo fue cargado")
+                },
+                (error) => {
+                    if (error.code === 'storage/unauthorized') {
+                        setAlert({text: "Usuario inválido, por favor realice el inicio de sesión", variant: 'danger'})
+                    }
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        if(fileType === 'image/jpeg'){
+                            setImageUrls(elements => [...elements, downloadURL])
+                        }else if(fileType === 'audio/mpeg'){
+                            setSoundUrl(downloadURL);
+                        }
+                    });
+                }
+            );
+        }
+
+    }
+
+    /**
+     * Regresa los elementos del formulario a su estado inicial, disponible para una nueva creación
+     */
+    const clearForm = () => {
+        setSound("");
+        setImages({});
+        setImageUrls([]);
+        setSoundUrl("");
+        document.querySelector('#inpt-sound-species').value = "";
+        document.querySelector('#inpt-images-species').value = "";
+    }
+
+    return (
+        &lt;>
+            &lt;MetaTags title='Agregar Especie | FDC'/>
+            &lt;Navbar brand='FDC' title= 'Administrador | FDC' full={false}/>
+            &lt;Alert 
+                text={alert.text}
+                variant={alert.variant}
+                alertState={alertState}
+                setAlertState={setAlertState}
+            />
+            &lt;Container className='py-3'>
+                &lt;NavLink to={'/'} className='text-decoration-none'>Volver al inicio&lt;/NavLink>
+                &lt;h2>&lt;b>Agregar especie&lt;/b>&lt;/h2>
+                &lt;SpecieForm
+                    setSpecie={setSpecie}
+                    createSpecies={createSpecies}
+                    images={images}
+                    setImages={setImages}
+                    sound={sound}
+                    setSound={setSound}
+                />
+            &lt;/Container>
+        &lt;/>
+    );
+}
+
+export default Create;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Specie.html">Specie</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Create">Create</a></li><li><a href="global.html#deleteSpecie">deleteSpecie</a></li><li><a href="global.html#Edit">Edit</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#IconFDC">IconFDC</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ProtectedRouteLogin">ProtectedRouteLogin</a></li><li><a href="global.html#SpecieForm">SpecieForm</a></li><li><a href="global.html#updateSpecie">updateSpecie</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useGetSpecie">useGetSpecie</a></li><li><a href="global.html#useGetSpecies">useGetSpecies</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 16:11:27 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/edit/Edit.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/edit/Edit.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import MetaTags from '../main/MetaTags';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import useGetSpecie from '../../hooks/useGetSpecie';
+import deleteSpecie from '../../firebase/deleteSpecie';
+import Confirm from '../../elements/Confirm';
+import SpecieForm from '../main/SpecieForm';
+import Navbar from '../../elements/Navbar';
+import { Container, Spinner } from 'react-bootstrap';
+import QrCode from '../../elements/QrCode';
+
+/**
+ * Este componente se encarga identificar las especie que se desea editar, habilitar la posibilidad
+ * de edición en caso de ser posible y de gestionar la eliminación del registro en la base de datos
+ * si el usuario lo solicita.
+ * 
+ * @returns El formulario que contiene los campos para la edición y el botón que permite eliminar
+ */
+const Edit = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [specie, docState] = useGetSpecie(id);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [deleteState, setDeleteState] = useState(false);
+
+    useEffect(() => {
+        if (deleteState === true) {
+            deleteSpecie(id, specie.images, specie.sound);
+            navigate('/');
+        }
+    }, [deleteState, id, navigate, specie, specie.sound])
+
+    /**
+     * Esta función asincrona se encarga de confirmar la eliminación de un registro y si es confirmado
+     * proceder con la eliminación tanto de su registro como del contenido multimedia asociado a él
+     */
+    const handleDelete = async () => {
+        setShowConfirm(true);
+    }
+
+    return (
+        &lt;>
+            &lt;MetaTags title='Editar Especie | FDC' />
+            &lt;Navbar brand='FDC' title='Administrador | FDC' full={true} />
+            &lt;Confirm
+                show={showConfirm}
+                setShow={setShowConfirm}
+                setDeleteState={setDeleteState}
+            />
+            &lt;Container className='py-3'>
+                &lt;NavLink to={'/'} className='text-decoration-none'>Volver al inicio&lt;/NavLink>
+                &lt;h2>&lt;b>Editar especie&lt;/b>&lt;/h2>
+
+                {docState === 'load' &amp;&amp;
+                    &lt;Container className='d-flex'>
+                        &lt;Spinner animation='border' variant='primary' className='mx-auto my-5' />
+                    &lt;/Container>
+                }
+                {docState === 'empty' &amp;&amp; &lt;h3>La especie no se ha encontrado, &lt;NavLink to={'/'}>vuelva al inicio&lt;/NavLink>&lt;/h3>}
+                {docState === 'exists' &amp;&amp;
+                    &lt;div>
+                        &lt;MetaTags title={'Editar | ' + specie.commonName + ' | FDC'} />
+                        &lt;p>ID de la especie: {id}&lt;/p>
+
+                        &lt;SpecieForm
+                            id={id}
+                            specie={specie}
+                            handleDelete={handleDelete}
+                        />
+
+                        &lt;QrCode text={'fdc-web-project.web.app/about/' + id} label={'QR | ' + specie.commonName}/>
+                    &lt;/div>
+                }
+            &lt;/Container>
+        &lt;/>
+    );
+}
+
+export default Edit;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Specie.html">Specie</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Create">Create</a></li><li><a href="global.html#deleteSpecie">deleteSpecie</a></li><li><a href="global.html#Edit">Edit</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#IconFDC">IconFDC</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ProtectedRouteLogin">ProtectedRouteLogin</a></li><li><a href="global.html#SpecieForm">SpecieForm</a></li><li><a href="global.html#updateSpecie">updateSpecie</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useGetSpecie">useGetSpecie</a></li><li><a href="global.html#useGetSpecies">useGetSpecies</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 16:11:27 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

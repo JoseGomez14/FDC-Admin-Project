@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: model/Specie.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: model/Specie.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Esta clase es el modelo de cada especie que trabaja en el sitio, contiene los
+ * atributos que se han considerado necesario para los procesos de divulgación y filtrado
+ * 
+ * Contiene un método que permite transformar la información de la clase en objeto Json
+ */
+export class Specie{
+    #id;
+    #commonName;
+    #scientificName;
+    #kingdom;
+    #className;
+    #genus;
+    #description;
+    #habitat;
+    #state;
+    #mapUrl;
+    #skinColor;
+    #size;
+    #food;
+    #images;
+    #sound;
+    #srcSound;
+    #inaturalistUrl;
+
+    /**
+     * Constructor de la clase
+     * @param {string} commonName Nombre común de la especie
+     * @param {string} scientificName Nombre científico de la especie
+     * @param {string[]} images Conjunto de urls de las imágenes asociadas a la especie
+     * @param {string} sound Url del sonido asociado a la especie
+     */
+    constructor(commonName, scientificName, kingdom, className, genus, description, habitat, state, mapUrl,
+        skinColor, size, food, images, sound, srcSound, inaturalistUrl){
+        this.#id             = "";
+        this.#commonName     = commonName;
+        this.#scientificName = scientificName;
+        this.#kingdom        = kingdom     || "";
+        this.#className      = className;
+        this.#genus          = genus       || "";
+        this.#description    = description || "";
+        this.#habitat        = habitat || "";
+        this.#state          = state   || "";
+        this.#mapUrl         = mapUrl  || "";
+        this.#skinColor      = skinColor;
+        this.#size           = size || 0;
+        this.#food           = food || "";
+        this.#images         = images;
+        this.#sound          = sound;
+        this.#inaturalistUrl = inaturalistUrl || "";
+        this.#srcSound       = srcSound       || "";
+    }
+
+    /**Getters and setters */
+    get id(){
+        return(this.#id);
+    }
+
+    set id(id){
+        this.#id = id;
+    }
+    
+    get commonName(){
+        return(this.#commonName);
+    }
+
+    set commonName(commonName){
+        this.#commonName = commonName;
+    }
+    
+    get scientificName(){
+        return(this.#scientificName);
+    }
+
+    set scientificName(scientificName){
+        this.#scientificName = scientificName;
+    }
+    
+    get className(){
+        return(this.#className);
+    }
+
+    set className(className){
+        this.#className = className;
+    }
+
+    get kingdom(){
+        return(this.#kingdom);
+    }
+
+    set kingdom(kingdom){
+        this.#kingdom = kingdom;
+    }
+    
+    get genus(){
+        return(this.#genus);
+    }
+
+    set genus(genus){
+        this.#genus = genus;
+    }
+    
+    get description(){
+        return(this.#description);
+    }
+
+    set description(description){
+        this.#description = description;
+    }
+    
+    get habitat(){
+        return(this.#habitat);
+    }
+
+    set habitat(habitat){
+        this.#habitat = habitat;
+    }
+    
+    get state(){
+        return(this.#state);
+    }
+
+    set state(state){
+        this.#state = state;
+    }
+    
+    get mapUrl(){
+        return(this.#mapUrl);
+    }
+
+    set mapUrl(mapUrl){
+        this.#mapUrl = mapUrl;
+    }
+    
+    get skinColor(){
+        return(this.#skinColor);
+    }
+
+    set skinColor(skinColor){
+        this.#skinColor = skinColor;
+    }
+    
+    get size(){
+        return(this.#size);
+    }
+
+    set size(size){
+        this.#size = size;
+    }
+    
+    get food(){
+        return(this.#food);
+    }
+
+    set food(food){
+        this.#food = food;
+    }
+    
+    get images(){
+        return(this.#images);
+    }
+
+    set images(images){
+        this.#images = images;
+    }
+    
+    get sound(){
+        return(this.#sound);
+    }
+
+    set sound(sound){
+        this.#sound = sound;
+    }
+    
+    get inaturalistUrl(){
+        return(this.#inaturalistUrl);
+    }
+
+    set inaturalistUrl(inaturalistUrl){
+        this.#inaturalistUrl = inaturalistUrl;
+    }
+    
+    get srcSound(){
+        return(this.#srcSound);
+    }
+
+    set srcSound(srcSound){
+        this.#srcSound = srcSound;
+    }
+
+    /**
+     * Este método permite consolidar la información de la clase en un objeto Json
+     * @returns objeto Json con la información de la especie
+     */
+    toJson(){
+        const obj = {
+            id: this.#id,
+            commonName: this.#commonName,
+            scientificName: this.#scientificName,
+            kingdom: this.#kingdom,
+            className: this.#className,
+            genus: this.#genus,
+            description: this.#description,
+            habitat: this.#habitat,
+            state: this.#state,
+            mapUrl: this.#mapUrl,
+            skinColor: this.#skinColor,
+            size: this.#size,
+            food: this.#food,
+            images: this.#images,
+            sound: this.#sound,
+            inaturalistUrl:  this.#inaturalistUrl,
+            srcSound: this.#srcSound
+        }
+
+        return obj;
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Specie.html">Specie</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Create">Create</a></li><li><a href="global.html#deleteSpecie">deleteSpecie</a></li><li><a href="global.html#Edit">Edit</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#IconFDC">IconFDC</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ProtectedRouteLogin">ProtectedRouteLogin</a></li><li><a href="global.html#SpecieForm">SpecieForm</a></li><li><a href="global.html#updateSpecie">updateSpecie</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useGetSpecie">useGetSpecie</a></li><li><a href="global.html#useGetSpecies">useGetSpecies</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 16:11:27 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

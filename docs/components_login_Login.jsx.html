@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/login/Login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/login/Login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import MetaTags from '../main/MetaTags';
+import { useNavigate } from 'react-router-dom';
+import loginUser from '../../firebase/loginUser';
+import icon from '../../assets/images/icon.png';
+import { Button, Form, InputGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import Alert from '../../elements/Alert';
+
+/**
+ * Este componente se encarga de gestionar el formulario de inicio de sesión
+ * 
+ * @returns El formulario de incio de sesión
+ */
+const Login = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [alert, setAlert] = useState({})
+    const [alertState, setAlertState] = useState(false);
+
+    /**
+     * Se encarga de verificar que la información ingresada cumpla con los requisitos y si es así
+     * enviar la información para validar desde loginUser con auth de firebase
+     * 
+     * @param {*} evt información del evento submit del formulario
+     */
+    const handleLogin = async (evt) => {
+        evt.preventDefault();
+        if (email === '' || password === '') {
+            setAlert({text: 'Debes completar todos los campos', variant: 'warning'})
+            setAlertState(true);
+            return;
+        }
+
+        const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+        if (!expresionRegular.test(email)) {
+            setAlert({text: 'El correo no es válido', variant: 'danger'})
+            setAlertState(true);
+            return;
+        }
+
+        loginUser(email, password, navigate, setAlert, setAlertState)
+    }
+
+    return (
+        &lt;main className='d-flex flex-column justify-content-center' style={{ background: '#f4f4f4', height: '100vh' }}>
+            &lt;MetaTags title='Inicio de Sesión | FDC'/>
+            &lt;Alert 
+                text={alert.text}
+                variant={alert.variant}
+                alertState={alertState}
+                setAlertState={setAlertState}
+            />
+            &lt;div className='container mx-auto px-4 d-flex flex-column justify-content-center align-items-center rounded overflow-auto'
+                style={{ background: '#FFF', height: '90%' }}>
+                &lt;h1 className='text-primary'>&lt;b>Inicio de sesión&lt;/b>&lt;/h1>
+                &lt;img src={icon} alt="Icono Fuera de Contexto" height='200px' className='mb-4' />
+                &lt;Form onSubmit={handleLogin} className="w-100" style={{ maxWidth: '400px', color: '#666' }}>
+                    &lt;Form.Group className="mb-4" controlId='inpt-email'>
+                        &lt;Form.Label className="fs-5">&lt;b>Correo electrónico&lt;/b>&lt;/Form.Label>
+                        &lt;InputGroup>
+                            &lt;InputGroup.Text>&lt;FontAwesomeIcon icon={faUser} />&lt;/InputGroup.Text>
+                            &lt;Form.Control
+                                size="lg"
+                                type="email"
+                                value={email}
+                                autoComplete='username'
+                                onChange={(evt) => setEmail(evt.target.value)}
+                            />
+                        &lt;/InputGroup>
+                    &lt;/Form.Group>
+
+                    &lt;Form.Group className="mb-4" controlId='inpt-password'>
+                        &lt;Form.Label className="fs-5">&lt;b>Contraseña&lt;/b>&lt;/Form.Label>
+                        &lt;InputGroup>
+                            &lt;InputGroup.Text>&lt;FontAwesomeIcon icon={faLock} />&lt;/InputGroup.Text>
+                            &lt;Form.Control
+                                size="lg"
+                                type="password"
+                                value={password}
+                                autoComplete='current-password'
+                                onChange={(evt) => setPassword(evt.target.value)}
+                            />
+                        &lt;/InputGroup>
+                    &lt;/Form.Group>
+
+                    &lt;div className="d-grid col-3 mx-auto">
+                        &lt;Button type='submit' variant='success' className="fs-5 mx-auto" >Ingresar&lt;/Button>
+                    &lt;/div>
+                &lt;/Form>
+            &lt;/div>
+        &lt;/main>
+    );
+}
+
+export default Login;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Specie.html">Specie</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Create">Create</a></li><li><a href="global.html#deleteSpecie">deleteSpecie</a></li><li><a href="global.html#Edit">Edit</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#IconFDC">IconFDC</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ProtectedRouteLogin">ProtectedRouteLogin</a></li><li><a href="global.html#SpecieForm">SpecieForm</a></li><li><a href="global.html#updateSpecie">updateSpecie</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useGetSpecie">useGetSpecie</a></li><li><a href="global.html#useGetSpecies">useGetSpecies</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 16:11:27 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
