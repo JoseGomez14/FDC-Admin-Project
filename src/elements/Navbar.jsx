@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from '../firebase/firebaseConfig'
 import { signOut } from "firebase/auth";
-import { ReactComponent as IconNavbar } from '../images/IconAdminNavbar.svg';
+import IconFDC from '../assets/images/IconFDC';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Nav } from 'react-bootstrap';
 import { Navbar as NavbarB } from 'react-bootstrap';
@@ -34,7 +34,7 @@ const Navbar = ({title, full}) => {
         <NavbarB bg='dark' variant='dark'>
             <Container>
                 <NavbarB.Brand as={NavLink} to={'/'} title={title}>
-                    <IconNavbar height='32px'/>
+                    <IconFDC height='32px'fill='#f4f4f4'/>
                 </NavbarB.Brand>
                 {full &&
                     <Nav>

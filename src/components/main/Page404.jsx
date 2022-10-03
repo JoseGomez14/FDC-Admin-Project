@@ -1,7 +1,7 @@
 import React from 'react';
 import MetaTags from '../main/MetaTags'
 import Navbar from '../../elements/Navbar'
-import { ReactComponent as NotFoundIcon} from '../../images/notFound.svg'
+import { ReactComponent as NotFoundIcon} from '../../assets/images/notFound.svg'
 import { Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 

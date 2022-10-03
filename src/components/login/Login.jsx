@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MetaTags from '../main/MetaTags';
 import { useNavigate } from 'react-router-dom';
 import loginUser from '../../firebase/loginUser';
-import icon from '../../images/icon.png';
+import icon from '../../assets/images/icon.png';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
