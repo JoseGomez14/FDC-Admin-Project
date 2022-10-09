@@ -8,7 +8,6 @@ import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
  * 
  * @param {*} props contiente la información de los modificares de estado para ir actualizando la información
  * en el momento que se va modificando en los inputs
- * @returns 
  */
 const Form = (props) => {
     const handleTypeSubmit = (evt) =>{
@@ -24,7 +23,7 @@ const Form = (props) => {
                 <legend className="mt-2 fw-semibold">Taxonomía</legend>
                 <Row xs={1} sm={2} lg={3}>
                     <Col>
-                        <FormB.Label htmlFor="inpt-common-name-species">Nombre común</FormB.Label><br />
+                        <FormB.Label htmlFor="inpt-common-name-species">Nombre común *</FormB.Label><br />
                         <FormB.Control
                             type="text" required
                             id="inpt-common-name-species"
@@ -38,7 +37,7 @@ const Form = (props) => {
                     </Col>
                     
                     <Col>
-                        <FormB.Label htmlFor="inpt-scientific-name-species">Nombre científico</FormB.Label>
+                        <FormB.Label htmlFor="inpt-scientific-name-species">Nombre científico *</FormB.Label>
                         <FormB.Control
                             type="text" required
                             id="inpt-scientific-name-species"
@@ -52,7 +51,7 @@ const Form = (props) => {
                     </Col>
                     
                     <Col>
-                        <FormB.Label htmlFor="inpt-genus-species">Género</FormB.Label>
+                        <FormB.Label htmlFor="inpt-genus-species">Género *</FormB.Label>
                         <FormB.Control
                             type="text" required
                             id="inpt-genus-species"
@@ -66,7 +65,7 @@ const Form = (props) => {
                     </Col>
                     
                     <Col>
-                        <FormB.Label htmlFor="inpt-class-species">Clase</FormB.Label>
+                        <FormB.Label htmlFor="inpt-class-species">Clase *</FormB.Label>
                         <FormB.Select 
                             id="inpt-class-species" required
                             className="mb-3"
@@ -87,21 +86,20 @@ const Form = (props) => {
 
             <FormB.Group>
                 <legend className="mt-4 fw-semibold">Información</legend>
-                <Row xs={1} sm={2} lg={3}>
+                <Row>
                     <Col>
-                        <FormB.Label htmlFor="inpt-description-species">Descripción</FormB.Label>
+                        <FormB.Label htmlFor="inpt-description-species">Descripción *</FormB.Label>
                         <FormB.Control
-                            type="text" required
+                            as="textarea" required
                             id="inpt-description-species"
-                            className="mb-3"
+                            className="mb-3" rows='5'
                             placeholder="Descripción general de la especie"
-                            pattern="[a-zA-ZÀ-ÿ\s]{2,}"
-                            title="La descripción debe tener mínimo 2 letras y no debe contener números o caracteres especiales"
                             disabled={!props.formState}
                             value={props.description}
                             onChange={(evt) => props.setDescription(evt.target.value)} />
                     </Col>
-
+                </Row>
+                <Row xs={1} sm={2} lg={3}>
                     <Col>
                         <FormB.Label htmlFor="inpt-url-map-species">Url de ubicación del registro</FormB.Label>
                         <FormB.Control
@@ -115,7 +113,19 @@ const Form = (props) => {
                     </Col>
 
                     <Col>
-                        <FormB.Label htmlFor="inpt-color-species">Color del pelaje</FormB.Label>
+                        <FormB.Label htmlFor="inpt-inaturalist-species">Url de iNaturalist</FormB.Label>
+                        <FormB.Control
+                            type="url"
+                            id="inpt-inaturalist-species"
+                            className="mb-3"
+                            placeholder="iNaturalist (Url de observación)"
+                            disabled={!props.formState}
+                            value={props.inaturalistUrl}
+                            onChange={(evt) => props.setInaturalistUrl(evt.target.value)} />
+                    </Col>
+
+                    <Col>
+                        <FormB.Label htmlFor="inpt-color-species">Color del pelaje *</FormB.Label>
                         <FormB.Select 
                             id="inpt-color-species" required
                             className="mb-3"
@@ -161,7 +171,7 @@ const Form = (props) => {
                     </Col>
 
                     <Col>
-                        <FormB.Label htmlFor="inpt-habitat-species">Hábitat</FormB.Label>
+                        <FormB.Label htmlFor="inpt-habitat-species">Hábitat *</FormB.Label>
                         <FormB.Select 
                             id="inpt-habitat-species"
                             className="mb-3"
@@ -234,7 +244,7 @@ const Form = (props) => {
 
             <FormB.Group>
                 <legend className="mt-4 fw-semibold">Imágenes</legend>
-                <FormB.Label htmlFor="inpt-images-species">Registros fotográficos</FormB.Label>
+                <FormB.Label htmlFor="inpt-images-species">Registros fotográficos *</FormB.Label>
                 <FormB.Control
                     type="file"
                     name="inpt-images-species"
