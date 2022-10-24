@@ -24,18 +24,23 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
     const [commonName, setCommonName] = useState("");
     const [scientificName, setScientificName] = useState("");
     const [genus, setGenus] = useState("");
-    const [className, setClassName] = useState("Aves");
+    const [className, setClassName] = useState("");
     const [description, setDescription] = useState("");
     const [mapUrl, setMapUrl] = useState("");
     const [extincion, setExtincion] = useState(false);
-    const [color, setColor] = useState("Blanco");
+    const [color, setColor] = useState("");
     const [size, setSize] = useState(0);
     const [food, setFood] = useState("");
-    const [habitat, setHabitat] = useState("Pradera");
-    const [kingdom, setKingdom] = useState("Fauna");
+    const [habitat, setHabitat] = useState("");
+    const [kingdom, setKingdom] = useState("");
+    const [phylum, setPhylum] = useState("");
+    const [subphylum, setSubphylum] = useState("");
+    const [order, setOrder] = useState("");
+    const [family, setFamily] = useState("")
     const [srcSound, setSrcSound] = useState("");
     const [soundUrl, setSoundUrl] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
+    const [srcImage, setSrcImage] = useState("");
     const [inaturalistUrl, setInaturalistUrl] = useState("");
     const [alert, setAlert] = useState({})
     const [alertState, setAlertState] = useState(false);
@@ -63,6 +68,11 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             setImageUrls(specie.images);
             setSrcSound(specie.srcSound);
             setInaturalistUrl(specie.inaturalistUrl);
+            setPhylum(specie.phylum);
+            setSubphylum(specie.subphylum);
+            setOrder(specie.order);
+            setFamily(specie.family);
+            setSrcImage(specie.srcImage);
         }
 
         if (images) {
@@ -90,7 +100,7 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
             await updateSpecie(id,
                 new Specie(commonName, scientificName, kingdom, className, genus,
                     description, habitat, extincion, mapUrl, color, size,
-                    food, imageUrls, soundUrl, srcSound, inaturalistUrl),
+                    food, imageUrls, soundUrl, srcSound, inaturalistUrl, phylum, subphylum, order, family, srcImage),
                     setAlert, setAlertState
             );
             setFormState(true);
@@ -101,7 +111,7 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
                         setFormState(false);
                         setSpecie(new Specie(commonName, scientificName, kingdom, className, genus,
                             description, habitat, extincion, mapUrl, color, size,
-                            food, images, soundUrl, srcSound, inaturalistUrl));
+                            food, images, soundUrl, srcSound, inaturalistUrl, phylum, subphylum, order, family, srcImage));
                         await createSpecies();
                         clearForm();
                     }
@@ -120,17 +130,22 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
         setCommonName('');
         setScientificName('');
         setGenus('')
-        setClassName('Aves');
+        setClassName('');
         setDescription('');
         setMapUrl('');
         setExtincion(false);
-        setColor('Blanco');
+        setColor('');
         setSize(0);
         setFood('');
-        setHabitat('Pradera');
-        setKingdom('Fauna');
+        setHabitat('');
+        setKingdom('');
         setSrcSound('');
         setInaturalistUrl('');
+        setPhylum('');
+        setSubphylum('');
+        setOrder('');
+        setFamily('');
+        setSrcImage('');
     }
 
     /**
@@ -192,6 +207,16 @@ const SpecieForm = ({ specie, id, setSpecie, createSpecies, images, setImages, s
                 setSound={setSound}
                 inaturalistUrl={inaturalistUrl}
                 setInaturalistUrl={setInaturalistUrl}
+                phylum={phylum}
+                setPhylum={setPhylum}
+                subphylum={subphylum}
+                setSubphylum={setSubphylum}
+                order={order}
+                setOrder={setOrder}
+                family={family}
+                setFamily={setFamily}
+                srcImage={srcImage}
+                setSrcImage={setSrcImage}
             ></Form>
         </>
     );
