@@ -14,10 +14,10 @@ const loginUser = async (email, password, navigate, setAlert, setAlertState) => 
     } catch (error) {
         switch (error.code) {
             case 'auth/wrong-password':
-                setAlert({text: 'La contraseña no es correcta.', variant: 'danger'});
+                setAlert({text: 'El correo y/o la contraseña no son correctos.', variant: 'danger'});
                 break;
             case 'auth/user-not-found':
-                setAlert({text: 'No se encontro ninguna cuenta con este correo electrónico.', variant: 'danger'});
+                setAlert({text: 'El correo y/o la contraseña no son correctos', variant: 'danger'});
                 break;
             default:
                 setAlert({text: 'Hubo un error al intentar iniciar sesión', variant: 'danger'});
