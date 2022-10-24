@@ -17,7 +17,7 @@ const useGetSpecies = () => {
     const getMoreSpecies = () => {
         const queries = query(
             collection(dataBase, 'species'),
-            limit(10),
+            limit(12),
             startAfter(lastSpecie)
         );
 
@@ -37,7 +37,7 @@ const useGetSpecies = () => {
     useEffect(() => {
         const queries = query(
             collection(dataBase, 'species'),
-            limit(10)
+            limit(12)
         );
 
         const unsuscribe = onSnapshot(queries, (snapshot) => {
