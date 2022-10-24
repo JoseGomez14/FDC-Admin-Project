@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import MetaTags from '../main/MetaTags';
 import { useNavigate } from 'react-router-dom';
 import loginUser from '../../firebase/loginUser';
@@ -7,6 +7,7 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import Alert from '../../elements/Alert';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 /**
  * Este componente se encarga de gestionar el formulario de inicio de sesión
@@ -19,6 +20,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [alert, setAlert] = useState({})
     const [alertState, setAlertState] = useState(false);
+    const captchaRef = useRef(null);
 
     /**
      * Se encarga de verificar que la información ingresada cumpla con los requisitos y si es así
@@ -28,15 +30,22 @@ const Login = () => {
      */
     const handleLogin = async (evt) => {
         evt.preventDefault();
+
         if (email === '' || password === '') {
-            setAlert({text: 'Debes completar todos los campos', variant: 'warning'})
+            setAlert({ text: 'Debes completar todos los campos', variant: 'warning' })
             setAlertState(true);
             return;
         }
 
         const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
         if (!expresionRegular.test(email)) {
-            setAlert({text: 'El correo no es válido', variant: 'danger'})
+            setAlert({ text: 'El correo no es válido', variant: 'danger' })
+            setAlertState(true);
+            return;
+        }
+
+        if (!captchaRef.current.getValue()) {
+            setAlert({ text: 'Demuestra que no eres un robot', variant: 'danger' })
             setAlertState(true);
             return;
         }
@@ -46,8 +55,8 @@ const Login = () => {
 
     return (
         <main className='d-flex flex-column justify-content-center' style={{ background: '#f4f4f4', height: '100vh' }}>
-            <MetaTags title='Inicio de Sesión | FDC'/>
-            <Alert 
+            <MetaTags title='Inicio de Sesión | FDC' />
+            <Alert
                 text={alert.text}
                 variant={alert.variant}
                 alertState={alertState}
@@ -86,7 +95,13 @@ const Login = () => {
                         </InputGroup>
                     </Form.Group>
 
-                    <div className="d-grid col-3 mx-auto">
+                    <div className="d-grid col-3 mx-auto" style={{ width: '100%' }}>
+                        <ReCAPTCHA
+                            sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
+                            style={{ marginBottom: '24px' }}
+                            ref={captchaRef}
+                            className="fs-5 mx-auto"
+                        />
                         <Button type='submit' variant='success' className="fs-5 mx-auto" >Ingresar</Button>
                     </div>
                 </Form>
